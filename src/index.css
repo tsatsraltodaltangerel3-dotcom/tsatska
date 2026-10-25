@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: "Newsreader", Georgia, serif;
+    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #040918;
+    color: #dfe3fb;
+    overflow-x: hidden;
+  }
+}
+
+.font-serif-display {
+  font-family: var(--font-serif);
+}
+
+.font-mono-code {
+  font-family: var(--font-mono);
+}
+
+/* Glass Card */
+.glass-card {
+  background: rgba(8, 21, 62, 0.84);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(132, 146, 255, 0.38);
+  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.7), 0 2px 10px rgba(132, 146, 255, 0.12) inset;
+}
+
+.glass-card-hover {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(160, 175, 255, 0.65);
+  box-shadow: 0 30px 70px rgba(2, 6, 23, 0.85), 0 0 25px rgba(132, 146, 255, 0.25);
+}
+
+/* Lighting Effects: Bloom */
+@keyframes bloomPulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.animate-bloom-1 {
+  animation: bloomPulse 5.2s ease-in-out infinite;
+}
+
+.animate-bloom-2 {
+  animation: bloomPulse 6.1s ease-in-out 1.4s infinite;
+}
+
+.animate-bloom-3 {
+  animation: bloomPulse 4.8s ease-in-out 2.7s infinite;
+}
+
+/* Lighting Effects: Headlight Sweep */
+@keyframes headlightSweep {
+  0% {
+    transform: translateX(-120%) rotate(-25deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.28;
+  }
+  30% {
+    transform: translateX(120%) rotate(-25deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(120%) rotate(-25deg);
+    opacity: 0;
+  }
+}
+
+.animate-sweep {
+  animation: headlightSweep 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Waveform Bar Breathing */
+@keyframes barBreathe {
+  0%, 100% {
+    transform: scaleY(0.72);
+  }
+  50% {
+    transform: scaleY(1.08);
+  }
+}
+
+.animate-bar {
+  animation: barBreathe 1.6s ease-in-out infinite;
+  transform-origin: bottom;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #040918;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(132, 146, 255, 0.25);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(132, 146, 255, 0.5);
+}

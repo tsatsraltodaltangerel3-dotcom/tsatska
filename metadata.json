@@ -1,0 +1,6 @@
+{
+  "name": "Цацралт-Од — Портфолио",
+  "description": "Цацралт-Одын албан ёсны портфолио: бүтээлүүд, мөрөөдлийн мэргэжил, сонирхол ба зорилго.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
