@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
-import { Play, Pause, ExternalLink, Globe, Award, Video, Compass } from 'lucide-react';
-import { PERSONAL_INFO } from '../data/portfolioData';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ArrowRight, ChevronRight, Pause, Play, Volume2, X } from 'lucide-react';
+import { KEY_METRICS, PERSONAL_INFO } from '../data/portfolioData';
+import { TopographicBg } from './TopographicBg';
 
 interface HeroMurmurSceneProps {
   isPlaying: boolean;
@@ -8,276 +9,204 @@ interface HeroMurmurSceneProps {
 }
 
 export const HeroMurmurScene: React.FC<HeroMurmurSceneProps> = ({ isPlaying, onToggleAudio }) => {
-  // Generate 62 waveform bars matching the exact prompt spec:
-  // "62 thin rounded bars (1.9px) across 335×34 at (203, 138). Most are quiet; there's a tall bright burst at about 25%,
-  // softer bumps at 33% and 68%, and a colour drift from blue #5560FF through periwinkle #86A2FF to violet #A083FF"
-  const waveformBars = useMemo(() => {
-    const barsCount = 62;
-    return Array.from({ length: barsCount }, (_, i) => {
-      const pos = i / (barsCount - 1);
-      // Tall burst near 25% (0.25)
-      const burst1 = Math.exp(-Math.pow((pos - 0.25) / 0.06, 2)) * 0.95;
-      // Soft bump near 33% (0.33)
-      const burst2 = Math.exp(-Math.pow((pos - 0.35) / 0.07, 2)) * 0.65;
-      // Soft bump near 68% (0.68)
-      const burst3 = Math.exp(-Math.pow((pos - 0.68) / 0.08, 2)) * 0.75;
-      // Base quiet ripple
-      const base = 0.18 + 0.12 * Math.sin(i * 0.45);
-      const heightPercent = Math.min(100, Math.max(16, (base + burst1 + burst2 + burst3) * 100));
+  const [videoError, setVideoError] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
-      // Color interpolation: #5560FF -> #86A2FF -> #A083FF
-      let color = '#5560FF';
-      if (pos > 0.5) {
-        color = '#A083FF';
-      } else if (pos > 0.25) {
-        color = '#86A2FF';
+  useEffect(() => {
+    if (!isVideoModalOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsVideoModalOpen(false);
       }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isVideoModalOpen]);
 
-      // Delay for staggered breathing loop
-      const delay = (i % 8) * 0.2;
-
+  const waveformBars = useMemo(() => {
+    const count = 12;
+    return Array.from({ length: count }, (_, i) => {
+      const pos = i / (count - 1);
+      const height = Math.round(35 + 65 * Math.abs(Math.sin(pos * Math.PI * 2.5 + 0.6)));
       return {
         id: i,
-        heightPercent,
-        color,
-        delay,
+        height,
+        delay: (i % 6) * 0.14,
       };
     });
   }, []);
 
   return (
-    <section id="hero" className="relative w-full min-h-screen pt-16 flex items-center justify-center overflow-hidden bg-[#040918]">
-      {/* ==============================================================
-          1. SCENE BACKGROUND (PLATE & VIDEO)
-          ============================================================== */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-        {/* The 16:10 Plate Image */}
-        <img
-          src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7a7598ba-a6f8-42b4-ac39-98279dac4192.jpg"
-          alt="Rainy blue hour window view"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-90"
-        />
+    <section
+      id="hero"
+      className="relative w-full pt-24 pb-16 lg:pt-28 lg:pb-24 bg-[#021327] text-white overflow-hidden"
+    >
+      {/* Topographic Contour Lines Background */}
+      <TopographicBg className="absolute inset-0 w-full h-full opacity-95" />
 
-        {/* Looping Video: 111.11% width, left -5.556% */}
-        <video
-          src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/d41b8c1d-f175-43b3-af22-7081133aa8de.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute top-0 h-full max-w-none object-cover opacity-80 mix-blend-screen pointer-events-none"
-          style={{
-            width: '111.11%',
-            left: '-5.556%',
-          }}
-        />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Framed Editorial Video Stage (City Football Group Style) */}
+        <div className="relative mx-auto max-w-6xl">
+          <div className="relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/8.2] w-full overflow-hidden bg-[#051B36] border border-white/10 shadow-[0_32px_90px_rgba(0,8,20,0.85)]">
+            {!videoError ? (
+              <video
+                poster={PERSONAL_INFO.heroImage}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                onError={() => setVideoError(true)}
+                aria-label="Хөл бөмбөгийн арын дэвсгэр видео"
+                className="w-full h-full object-cover object-center opacity-85"
+              >
+                <source src={PERSONAL_INFO.heroVideo} type="video/mp4" />
+                <source src={PERSONAL_INFO.heroVideoFallback} type="video/webm" />
+              </video>
+            ) : !imgError ? (
+              <img
+                src={PERSONAL_INFO.heroImage}
+                alt="Хөл бөмбөгийн талбай дээрх залуу тамирчид"
+                onError={() => setImgError(true)}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-center opacity-80"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-[#031A34] via-[#06284D] to-[#021327]" />
+            )}
 
-        {/* ==============================================================
-            2. LIGHTING LAYERS (Bloom & Headlight Sweep)
-            ============================================================== */}
-        {/* Bloom 1: Pink radial glow over city lights */}
+            {/* Measured Scrim for Guaranteed Contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#021327] via-[#021327]/45 to-[#021327]/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#021327]/90 via-[#021327]/35 to-transparent pointer-events-none" />
+          </div>
+
+          {/* Left-Anchored Bold Athletic Display Typographic Overlay */}
+          <div className="relative sm:absolute sm:bottom-8 sm:left-0 lg:bottom-12 lg:-left-4 z-20 mt-6 sm:mt-0 max-w-3xl">
+            <p className="text-sm sm:text-base font-semibold tracking-wide text-[#CBD5E1] mb-2">
+              {PERSONAL_INFO.name} · Хувийн портфолио
+            </p>
+
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-[76px] font-bold uppercase leading-[0.96] tracking-tight text-white [text-wrap:balance] drop-shadow-[0_6px_28px_rgba(2,19,39,0.9)]">
+              ХӨЛ БӨМБӨГИЙН{' '}
+              <span className="text-[#38BDF8]">ИРЭЭДҮЙН</span>{' '}
+              ТЭРГҮҮН ЭГНЭЭНД
+            </h1>
+
+            <p className="mt-4 max-w-xl text-sm sm:text-base text-[#CBD5E1] leading-relaxed">
+              {PERSONAL_INFO.tagline}. Өдөр тутмын бэлтгэл сургуулилт, аялал болон вэб хөгжүүлэлтийн бүтээлүүд.
+            </p>
+
+            {/* Primary CTA & Controls */}
+            <div className="mt-6 flex flex-wrap items-center gap-3.5">
+              <button
+                type="button"
+                onClick={() => setIsVideoModalOpen(true)}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/15 hover:bg-[#38BDF8] text-white hover:text-[#021327] border border-white/25 hover:border-[#38BDF8] backdrop-blur-sm text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38BDF8]"
+              >
+                <span>Бүтэн видео үзэх</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+
+              <a
+                href="#works"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-[#CBD5E1] hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38BDF8]"
+              >
+                <span>Бүтээлүүд үзэх</span>
+                <ArrowRight className="w-4 h-4 text-[#38BDF8]" />
+              </a>
+
+              <button
+                type="button"
+                onClick={onToggleAudio}
+                aria-label={isPlaying ? 'Борооны аясыг зогсоох' : 'Борооны аясыг тоглуулах'}
+                className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-[#051B36]/90 hover:bg-[#09274A] border border-white/15 text-xs font-medium text-[#E2E8F0] transition-colors duration-200 cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38BDF8]"
+              >
+                <span className="w-5 h-5 rounded-full bg-[#38BDF8] text-[#021327] flex items-center justify-center shrink-0">
+                  {isPlaying ? (
+                    <Pause className="w-3 h-3 fill-current" />
+                  ) : (
+                    <Play className="w-3 h-3 fill-current ml-0.5" />
+                  )}
+                </span>
+                <span>{isPlaying ? 'Аяс зогсоох' : 'Борооны аяс'}</span>
+
+                <span className="flex items-end gap-[2px] h-3" aria-hidden="true">
+                  {waveformBars.map((bar) => (
+                    <span
+                      key={bar.id}
+                      className={`w-[2px] rounded-full bg-[#38BDF8] transition-opacity duration-200 ${
+                        isPlaying ? 'animate-bar opacity-100' : 'opacity-40'
+                      }`}
+                      style={{
+                        height: `${bar.height}%`,
+                        animationDelay: `${bar.delay}s`,
+                      }}
+                    />
+                  ))}
+                </span>
+                <Volume2 className="w-3.5 h-3.5 text-[#38BDF8] hidden sm:inline" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Full-Width 4-Column Key Metrics Strip Below Hero Split */}
+        <div className="mt-14 lg:mt-16 pt-8 border-t border-white/12 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
+          {KEY_METRICS.map((metric) => (
+            <div key={metric.label} className="space-y-1">
+              <div className="font-display text-3xl sm:text-4xl font-bold text-[#38BDF8] tabular-nums tracking-tight">
+                {metric.value}
+              </div>
+              <div className="text-xs sm:text-sm font-medium text-[#CBD5E1]">
+                {metric.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Fullscreen Video Lightbox Modal */}
+      {isVideoModalOpen && (
         <div
-          className="absolute top-[28%] left-[45%] w-[380px] h-[380px] rounded-full blur-[90px] pointer-events-none mix-blend-screen animate-bloom-1"
-          style={{ background: 'radial-gradient(circle, rgba(244,114,182,0.45) 0%, rgba(244,114,182,0) 70%)' }}
-        />
-
-        {/* Bloom 2: Amber radial glow over warm bokeh */}
-        <div
-          className="absolute top-[35%] right-[25%] w-[420px] h-[420px] rounded-full blur-[100px] pointer-events-none mix-blend-screen animate-bloom-2"
-          style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.38) 0%, rgba(251,191,36,0) 70%)' }}
-        />
-
-        {/* Bloom 3: Periwinkle radial glow */}
-        <div
-          className="absolute top-[20%] left-[25%] w-[460px] h-[460px] rounded-full blur-[110px] pointer-events-none mix-blend-screen animate-bloom-3"
-          style={{ background: 'radial-gradient(circle, rgba(129,140,248,0.4) 0%, rgba(129,140,248,0) 70%)' }}
-        />
-
-        {/* Sweep: Pale diagonal light band sweeping every 7s */}
-        <div
-          className="absolute inset-0 pointer-events-none mix-blend-screen overflow-hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Хөл бөмбөгийн бүрэн бичлэг"
+          className="fixed inset-0 z-50 bg-[#021327]/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-8"
+          onClick={() => setIsVideoModalOpen(false)}
         >
           <div
-            className="w-[200%] h-[300px] bg-gradient-to-r from-transparent via-white/10 to-transparent blur-3xl animate-sweep"
-            style={{ top: '35%' }}
-          />
-        </div>
-
-        {/* Subtle dark vignette scrim for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#040918]/60 via-transparent to-[#040918]/90" />
-      </div>
-
-      {/* ==============================================================
-          3. SCALED CONTENT FRAME (Responsive Desktop & Mobile)
-          ============================================================== */}
-      <div className="relative z-10 w-full max-w-[1440px] min-h-[850px] mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col items-center justify-between">
-        
-        {/* --- Top Titles & Wordmark --- */}
-        <div className="text-center pt-2 sm:pt-6 space-y-2 max-w-3xl">
-          {/* Wordmark: Newsreader, white, tracking +.05em with soft navy shadow */}
-          <h1
-            className="font-serif-display text-5xl sm:text-7xl md:text-8xl lg:text-[104px] leading-tight font-medium text-white tracking-[0.05em]"
-            style={{
-              textShadow: '0 12px 35px rgba(2, 6, 23, 0.85), 0 2px 10px rgba(132, 146, 255, 0.35)',
-            }}
+            className="relative w-full max-w-5xl bg-[#051B36] border border-white/15 rounded-xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
           >
-            {PERSONAL_INFO.name}
-          </h1>
-
-          {/* Subtitle: Inter, lavender #dfe3fb */}
-          <p className="text-lg sm:text-2xl md:text-3xl text-[#dfe3fb] font-light tracking-wide">
-            Хувийн портфолио & Мөрөөдлийн аялал
-          </p>
-
-          {/* Label: IBM Plex Mono 12.6px, tracking .05em */}
-          <div className="pt-2">
-            <span className="font-mono-code text-xs sm:text-[13px] tracking-[0.08em] text-[#b9c4ea] uppercase px-3 py-1 rounded bg-[#08153e]/60 border border-[#8492ff]/25 backdrop-blur-sm">
-              МИНИЙ МЭДЭЭЛЭЛ, ЗУРАГ & БҮТЭЭЛҮҮД
-            </span>
-          </div>
-        </div>
-
-        {/* --- Middle: The Iconic Player Card --- */}
-        <div className="my-6 w-full max-w-[660px]">
-          <div className="glass-card rounded-2xl p-5 sm:p-6 shadow-2xl relative overflow-hidden transition-all duration-300">
-            {/* Subtle glow highlight */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[#5560FF]/20 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
-              {/* Cover Art: 158x156 (user photo from index.html) */}
-              <div className="relative w-36 h-36 sm:w-[158px] sm:h-[156px] shrink-0 rounded-[10px] overflow-hidden border border-[#8492ff]/40 shadow-lg group">
-                <img
-                  src={PERSONAL_INFO.avatar}
-                  alt={PERSONAL_INFO.name}
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#08153e]/90 via-transparent to-transparent" />
-                <span className="absolute bottom-2 left-2.5 font-serif-display text-sm font-semibold text-white tracking-wide drop-shadow-md">
-                  {PERSONAL_INFO.name}
-                </span>
-              </div>
-
-              {/* Card Meta & Controls */}
-              <div className="flex-1 w-full flex flex-col justify-between min-h-[145px]">
-                <div>
-                  <h3 className="text-white text-lg sm:text-xl font-medium leading-snug line-clamp-2">
-                    Миний мөрөөдөл бол мэргэжлийн хөл бөмбөгчин болох
-                  </h3>
-                  <div className="font-mono-code text-xs text-[#7583bd] mt-1.5 flex items-center gap-2">
-                    <span>18 настай</span>
-                    <span>·</span>
-                    <span>Хөл бөмбөгчин</span>
-                    <span>·</span>
-                    <span>Цацралт-Од</span>
-                  </div>
-                </div>
-
-                {/* Waveform & Play Button Row */}
-                <div className="mt-4 pt-2 border-t border-[#8492ff]/15 flex items-center justify-between gap-3">
-                  {/* Waveform: 62 thin rounded bars with breathing motion */}
-                  <div
-                    className="flex-1 h-8 flex items-end justify-between gap-[2px] px-1 cursor-pointer"
-                    onClick={onToggleAudio}
-                    title="Аудио тоглуулах / түр зогсоох"
-                  >
-                    {waveformBars.map((bar) => (
-                      <span
-                        key={bar.id}
-                        className={`w-[2.2px] rounded-full transition-all duration-300 ${
-                          isPlaying ? 'animate-bar' : 'opacity-65'
-                        }`}
-                        style={{
-                          height: `${bar.heightPercent}%`,
-                          backgroundColor: bar.color,
-                          animationDelay: `${bar.delay}s`,
-                          boxShadow: isPlaying ? `0 0 6px ${bar.color}88` : 'none',
-                        }}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Play Button: 37px off-white circle with navy play triangle */}
-                  <button
-                    onClick={onToggleAudio}
-                    className="w-10 h-10 shrink-0 rounded-full bg-[#f4f6ff] hover:bg-white text-[#08153e] flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_rgba(134,162,255,0.8)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
-                    aria-label={isPlaying ? "Түр зогсоох" : "Борооны аяс тоглуулах"}
-                  >
-                    {isPlaying ? (
-                      <Pause className="w-4 h-4 fill-[#08153e]" />
-                    ) : (
-                      <Play className="w-4 h-4 fill-[#08153e] ml-0.5" />
-                    )}
-                  </button>
-                </div>
-              </div>
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10">
+              <span className="font-display text-lg uppercase tracking-wide text-white">
+                Хөл бөмбөгийн тоглолтын бичлэг
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsVideoModalOpen(false)}
+                aria-label="Видео хаах"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#38BDF8] text-white hover:text-[#021327] flex items-center justify-center transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="aspect-video w-full bg-black">
+              <video
+                poster={PERSONAL_INFO.heroImage}
+                controls
+                autoPlay
+                playsInline
+                className="w-full h-full object-contain"
+              >
+                <source src={PERSONAL_INFO.heroVideo} type="video/mp4" />
+                <source src={PERSONAL_INFO.heroVideoFallback} type="video/webm" />
+              </video>
             </div>
           </div>
         </div>
-
-        {/* --- Bottom: About Lines & Platform Links Row --- */}
-        <div className="w-full max-w-4xl space-y-6 pt-2">
-          {/* About Section: IBM Plex Mono */}
-          <div className="glass-card rounded-xl p-5 sm:p-6 text-left">
-            <h4 className="font-mono-code text-xs uppercase tracking-[0.12em] text-[#86a2ff] font-semibold mb-2.5 flex items-center gap-2">
-              <span>●</span>
-              <span>МИНИЙ ТУХАЙ (ABOUT)</span>
-            </h4>
-            <div className="font-mono-code text-xs sm:text-sm text-[#dfe3fb] leading-relaxed space-y-1.5 opacity-90">
-              <p>Сайн байна уу, намайг Цацралт-Од гэдэг. Би 18 настай.</p>
-              <p>Хөл бөмбөг тоглох, өдөр бүр бэлтгэл сургуулилт хийж чадвараа сайжруулах дуртай.</p>
-              <p>Миний мөрөөдөл бол ирээдүйд мэргэжлийн хөл бөмбөгчин болж, олон тэмцээнд амжилт гаргах.</p>
-              <p className="text-[#86a2ff]">Хобби: Хөл бөмбөг · Кино: Гоол · Дуучин: Гангаа · Тоглоом: eFootball · Сонирхол: Аялал</p>
-            </div>
-          </div>
-
-          {/* Platform / Netlify Links Row */}
-          <div className="glass-card rounded-xl px-5 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <span className="font-mono-code text-xs uppercase tracking-[0.08em] text-[#b9c4ea] text-center sm:text-left">
-              МИНИЙ БҮТЭЭЛҮҮД БА ШУУД ХОЛБООСУУД
-            </span>
-
-            <div className="flex items-center gap-2.5">
-              <a
-                href="https://graceful-meringue-2b7911.netlify.app/index.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Нүүр хуудас (Шинэ цонхонд)"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0c163b] hover:bg-[#182760] border border-[#8492ff]/30 text-xs font-mono-code text-white hover:text-[#86a2ff] transition-all"
-              >
-                <Globe className="w-3.5 h-3.5 text-[#86a2ff]" />
-                <span>Нүүр хуудас</span>
-                <ExternalLink className="w-3 h-3 text-[#7583bd]" />
-              </a>
-
-              <a
-                href="https://graceful-meringue-2b7911.netlify.app/minii-mergjil.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Миний мэргэжил (Шинэ цонхонд)"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0c163b] hover:bg-[#182760] border border-[#8492ff]/30 text-xs font-mono-code text-white hover:text-[#86a2ff] transition-all"
-              >
-                <Award className="w-3.5 h-3.5 text-[#86a2ff]" />
-                <span>Миний мэргэжил</span>
-                <ExternalLink className="w-3 h-3 text-[#7583bd]" />
-              </a>
-
-              <a
-                href="https://graceful-meringue-2b7911.netlify.app/youtube.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="YouTube хуудас (Шинэ цонхонд)"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0c163b] hover:bg-[#182760] border border-[#8492ff]/30 text-xs font-mono-code text-white hover:text-[#86a2ff] transition-all"
-              >
-                <Video className="w-3.5 h-3.5 text-[#86a2ff]" />
-                <span>YouTube хуудас</span>
-                <ExternalLink className="w-3 h-3 text-[#7583bd]" />
-              </a>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      )}
     </section>
   );
 };

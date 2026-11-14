@@ -28,28 +28,17 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#040918] text-[#dfe3fb] font-sans selection:bg-[#5560FF] selection:text-white">
-      {/* Top Bar */}
-      <Header isPlaying={isPlaying} onToggleAudio={handleToggleAudio} />
+    <div className="min-h-screen bg-[#021327] text-white font-sans selection:bg-[#38BDF8] selection:text-[#021327]">
+      <Header />
 
-      {/* Hero: Murmur Cinematic Scene (Plate, Looping Video, Glass Player, Waveform, Ambient Sound) */}
       <main>
         <HeroMurmurScene isPlaying={isPlaying} onToggleAudio={handleToggleAudio} />
-
-        {/* Миний бүтээлүүд: Нэг жагсаалт (Array) - Карт бүр шинэ цонхонд нээгдэнэ */}
         <WorksSection />
-
-        {/* Миний мөрөөдлийн мэргэжил & 4 том зорилго */}
         <DreamProfessionSection />
-
-        {/* Сонирхолтой фактууд (18 нас, Хөл бөмбөг, Гоол, Гангаа, eFootball, Аялал) */}
         <FactsSection />
-
-        {/* YouTube хуудас (youtube.html дахь видеонууд ба категориуд) */}
         <YouTubeSection />
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

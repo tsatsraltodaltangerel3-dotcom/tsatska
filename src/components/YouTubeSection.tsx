@@ -1,110 +1,130 @@
 import React, { useState } from 'react';
-import { Video, ExternalLink, PlaySquare } from 'lucide-react';
-import { YOUTUBE_VIDEOS, PERSONAL_INFO } from '../data/portfolioData';
+import { ArrowUpRight, Video } from 'lucide-react';
+import { PERSONAL_INFO, YOUTUBE_VIDEOS } from '../data/portfolioData';
 
 export const YouTubeSection: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('Бүгд');
+  const [avatarError, setAvatarError] = useState(false);
 
   const categories = ['Бүгд', 'Хөгжим', 'Тоглоом', 'Live', 'Аниме'];
 
-  const filteredVideos = activeCategory === 'Бүгд'
-    ? YOUTUBE_VIDEOS
-    : YOUTUBE_VIDEOS.filter((v) => v.category === activeCategory || v.category === 'Бүгд');
+  const filteredVideos =
+    activeCategory === 'Бүгд'
+      ? YOUTUBE_VIDEOS
+      : YOUTUBE_VIDEOS.filter((v) => v.category === activeCategory || v.category === 'Бүгд');
 
   return (
-    <section id="youtube" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
-      {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-        <div className="flex items-center justify-center gap-2 text-xs font-mono-code text-[#86a2ff] uppercase tracking-widest">
-          <Video className="w-4 h-4" />
-          <span>ВИДЕО ЦУГЛУУЛГА & МЕДИА</span>
-        </div>
-        <h2 className="font-serif-display text-4xl sm:text-5xl text-white font-medium">
-          YouTube хуудас
-        </h2>
-        <p className="text-base sm:text-lg text-[#b9c4ea] max-w-2xl mx-auto">
-          Миний бэлтгэсэн YouTube клон төсөл дээрх сонирхолтой бичлэгүүд болон төрлүүд.
-        </p>
-      </div>
-
-      {/* Top Banner with Profile & External Link */}
-      <div className="glass-card rounded-2xl p-4 sm:p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#8492ff]/40 shrink-0">
-            <img
-              src={PERSONAL_INFO.playerProfile}
-              alt="YouTube Profile"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-          <div>
-            <h3 className="font-serif-display text-lg text-white font-medium">
-              {PERSONAL_INFO.name} — YouTube суваг
-            </h3>
-            <p className="font-mono-code text-xs text-[#7583bd]">
-              youtube.html төслийн шууд бүрэлдэхүүн
+    <section id="youtube" className="py-20 lg:py-28 bg-white text-[#021327]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-10 mb-10 border-b border-slate-200">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0284C7] mb-2">
+              Видео цуглуулга ба медиа
             </p>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#021327] [text-wrap:balance]">
+              YOUTUBE <span className="text-[#0284C7]">ХУУДАС</span>
+            </h2>
+          </div>
+
+          {/* Channel Action Row */}
+          <div className="flex flex-wrap items-center justify-between lg:justify-end gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full overflow-hidden border border-slate-200 bg-[#021327] shrink-0">
+                {!avatarError ? (
+                  <img
+                    src={PERSONAL_INFO.studioImage}
+                    alt="YouTube суваг"
+                    onError={() => setAvatarError(true)}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-[#38BDF8]">
+                    <Video className="w-5 h-5" />
+                  </div>
+                )}
+              </div>
+              <div>
+                <p className="text-sm font-bold text-[#021327]">{PERSONAL_INFO.name} — Суваг</p>
+                <p className="text-xs text-slate-500">youtube.html төслийн шууд цомог</p>
+              </div>
+            </div>
+
+            <a
+              href="https://graceful-meringue-2b7911.netlify.app/youtube.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#021327] hover:bg-[#0284C7] text-white text-xs font-semibold transition-colors duration-150 whitespace-nowrap shrink-0"
+            >
+              <span>YouTube хуудсыг нээх</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
           </div>
         </div>
 
-        {/* Link to Netlify version */}
-        <a
-          href="https://graceful-meringue-2b7911.netlify.app/youtube.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#5560FF] hover:bg-[#4651e6] active:scale-95 text-white text-xs font-mono-code transition-all shadow-md shadow-[#5560FF]/25"
-        >
-          <PlaySquare className="w-4 h-4" />
-          <span>YouTube хуудсыг нээх</span>
-          <ExternalLink className="w-3.5 h-3.5" />
-        </a>
-      </div>
-
-      {/* Filter Tabs / Categories */}
-      <div className="flex items-center justify-center flex-wrap gap-2 mb-10">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-mono-code transition-all cursor-pointer ${
-              activeCategory === cat
-                ? 'bg-[#5560FF] text-white shadow-lg shadow-[#5560FF]/30 font-semibold'
-                : 'bg-[#08153e]/80 text-[#b9c4ea] hover:text-white hover:bg-[#122361] border border-[#8492ff]/20'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Videos Responsive Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredVideos.map((video, idx) => (
+        {/* Interactive Category Filter Segmented Controls */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
           <div
-            key={video.id + idx}
-            className="glass-card rounded-xl overflow-hidden p-3.5 flex flex-col justify-between border border-[#8492ff]/25 hover:border-[#86a2ff]/60 transition-all group"
+            role="tablist"
+            aria-label="Видео төрөл шүүх"
+            className="inline-flex flex-wrap items-center gap-1 p-1 bg-slate-100 rounded-lg border border-slate-200"
           >
-            <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black/60 shadow-inner">
-              <iframe
-                src={video.embedUrl}
-                title={video.title}
-                className="w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            </div>
-            <div className="pt-3 px-1 flex items-center justify-between">
-              <span className="font-serif-display text-base text-white font-medium group-hover:text-[#86a2ff] transition-colors">
-                {video.title}
-              </span>
-              <span className="font-mono-code text-xs text-[#86a2ff] px-2 py-0.5 rounded bg-[#0b1742] border border-[#8492ff]/20">
-                {video.category}
-              </span>
-            </div>
+            {categories.map((cat) => {
+              const active = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-4 py-2 rounded-md text-xs sm:text-sm font-semibold transition-colors duration-150 cursor-pointer whitespace-nowrap shrink-0 ${
+                    active
+                      ? 'bg-[#021327] text-white shadow-sm'
+                      : 'text-slate-600 hover:text-[#021327]'
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
           </div>
-        ))}
+
+          <p className="text-xs font-medium text-slate-500 tabular-nums">
+            Нийт {filteredVideos.length} видео харагдаж байна
+          </p>
+        </div>
+
+        {/* Videos Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredVideos.map((video, idx) => (
+            <div
+              key={`${video.id}-${idx}`}
+              className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col justify-between"
+            >
+              <div className="relative w-full aspect-video bg-[#021327]">
+                <iframe
+                  src={video.embedUrl}
+                  title={video.title}
+                  className="w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+
+              <div className="p-4 flex items-center justify-between gap-3 bg-white border-t border-slate-200">
+                <h3 className="text-sm sm:text-base font-bold text-[#021327] truncate">
+                  {video.title}
+                </h3>
+                <span className="text-xs font-semibold text-[#0284C7] whitespace-nowrap shrink-0">
+                  {video.category}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

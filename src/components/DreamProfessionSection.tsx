@@ -1,120 +1,134 @@
-import React from 'react';
-import { Trophy, Target, Sparkles, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowUpRight, Trophy } from 'lucide-react';
 import { DREAM_PROFESSION, PERSONAL_INFO } from '../data/portfolioData';
+import { TopographicBg } from './TopographicBg';
 
 export const DreamProfessionSection: React.FC = () => {
-  return (
-    <section id="profession" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
-      {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-        <div className="flex items-center justify-center gap-2 text-xs font-mono-code text-[#86a2ff] uppercase tracking-widest">
-          <Trophy className="w-4 h-4" />
-          <span>ЗОРИЛГО БА ТЭМҮҮЛЭЛ</span>
-        </div>
-        <h2 className="font-serif-display text-4xl sm:text-5xl text-white font-medium">
-          {DREAM_PROFESSION.title}
-        </h2>
-        <p className="text-lg text-[#dfe3fb] font-light max-w-2xl mx-auto">
-          {DREAM_PROFESSION.subtitle}
-        </p>
-      </div>
+  const [imgError, setImgError] = useState(false);
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        {/* Left Column: Story & Photo */}
-        <div className="lg:col-span-5 flex flex-col justify-between glass-card rounded-2xl p-6 sm:p-8 overflow-hidden relative">
-          <div className="space-y-6">
-            <div className="relative w-full h-64 rounded-xl overflow-hidden border border-[#8492ff]/30 shadow-lg">
-              <img
-                src={PERSONAL_INFO.soccerPitch}
-                alt="Хөл бөмбөгийн талбай"
-                className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#08153e]/90 via-[#08153e]/20 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <span className="font-mono-code text-xs text-[#86a2ff] uppercase tracking-wider block mb-1">
+  return (
+    <section
+      id="profession"
+      className="relative py-20 lg:py-28 bg-[#021327] text-white overflow-hidden"
+    >
+      <TopographicBg className="absolute inset-0 w-full h-full opacity-40" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-10 mb-12 border-b border-white/12">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#38BDF8] mb-2">
+              Зорилго ба тэмүүлэл
+            </p>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white [text-wrap:balance]">
+              МӨРӨӨДЛИЙН <span className="text-[#38BDF8]">МЭРГЭЖИЛ</span>
+            </h2>
+          </div>
+
+          <p className="text-sm sm:text-base text-[#CBD5E1] max-w-md leading-relaxed">
+            {DREAM_PROFESSION.subtitle}. Багаасаа хөл бөмбөгөөр хичээллэж, олон улсын тавцанд өрсөлдөх чин хүсэлтэй.
+          </p>
+        </div>
+
+        {/* 12-Column Editorial Split */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {/* Left Column: Stadium Visual & Narrative */}
+          <div className="lg:col-span-5 flex flex-col justify-between bg-[#051B36] border border-white/10 rounded-xl overflow-hidden">
+            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-72 w-full overflow-hidden bg-[#031224]">
+              {!imgError ? (
+                <img
+                  src={PERSONAL_INFO.stadiumPitch}
+                  alt="Хөл бөмбөгийн орчин үеийн цэнгэлдэх хүрээлэн"
+                  onError={() => setImgError(true)}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover object-center"
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#031A34] to-[#08305A]">
+                  <Trophy className="w-10 h-10 text-[#38BDF8] mb-2" />
+                  <span className="font-display text-lg uppercase">Цэнгэлдэх хүрээлэн</span>
+                </div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#051B36] via-[#051B36]/30 to-transparent" />
+              <div className="absolute bottom-4 left-6 right-6">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#38BDF8] mb-1">
                   Талбайн замнал
-                </span>
-                <p className="text-white font-serif-display text-xl leading-tight">
-                  "Мэргэжлийн хөл бөмбөгчин болох хүсэл мөрөөдөл"
+                </p>
+                <p className="font-display text-2xl font-bold uppercase tracking-tight text-white">
+                  {DREAM_PROFESSION.motto}
                 </p>
               </div>
             </div>
 
-            <div className="space-y-4 text-[#dfe3fb] leading-relaxed text-sm sm:text-base">
-              <p>{DREAM_PROFESSION.description}</p>
-            </div>
-          </div>
-
-          <div className="pt-6 mt-6 border-t border-[#8492ff]/20 flex items-center justify-between">
-            <span className="font-serif-display text-lg text-white italic">
-              {DREAM_PROFESSION.motto}
-            </span>
-            <a
-              href="https://graceful-meringue-2b7911.netlify.app/minii-mergjil.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono-code text-[#86a2ff] hover:text-white bg-[#0c163b] hover:bg-[#192866] border border-[#8492ff]/30 rounded-lg transition-all"
-            >
-              <span>Дэлгэрэнгүй хуудас</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </div>
-        </div>
-
-        {/* Right Column: 4 Reasons & 4 Goals */}
-        <div className="lg:col-span-7 flex flex-col gap-8">
-          {/* Box 1: Why I chose this profession (4 Reasons) */}
-          <div className="glass-card rounded-2xl p-6 sm:p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-9 h-9 rounded-lg bg-[#5560FF]/20 border border-[#8492ff]/30 flex items-center justify-center text-[#86a2ff]">
-                <Sparkles className="w-5 h-5" />
+            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between gap-6">
+              <div className="space-y-4 text-sm sm:text-base text-[#CBD5E1] leading-relaxed">
+                <p>{DREAM_PROFESSION.description}</p>
+                <p>{PERSONAL_INFO.bioParagraph2}</p>
               </div>
-              <h3 className="font-serif-display text-2xl text-white font-medium">
-                Яагаад энэ мэргэжлийг сонгосон бэ?
-              </h3>
-            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {DREAM_PROFESSION.reasons.map((reason, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 rounded-xl bg-[#09153d]/70 border border-[#8492ff]/20 hover:border-[#8492ff]/40 transition-colors flex items-start gap-3.5"
+              <div className="pt-5 border-t border-white/10 flex items-center justify-between gap-4">
+                <span className="text-xs font-medium text-[#94A3B8]">
+                  {PERSONAL_INFO.name} · {PERSONAL_INFO.age}
+                </span>
+                <a
+                  href="https://graceful-meringue-2b7911.netlify.app/minii-mergjil.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 hover:bg-[#38BDF8] text-white hover:text-[#021327] text-xs font-semibold transition-colors duration-150 whitespace-nowrap shrink-0"
                 >
-                  <span className="text-2xl shrink-0 select-none">{reason.icon}</span>
-                  <p className="text-sm text-[#dfe3fb] font-medium leading-snug">
-                    {reason.text.replace(/^[^\s]+\s/, '')}
-                  </p>
-                </div>
-              ))}
+                  <span>Дэлгэрэнгүй хуудас</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Box 2: My 4 Goals */}
-          <div className="glass-card rounded-2xl p-6 sm:p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-9 h-9 rounded-lg bg-[#5560FF]/20 border border-[#8492ff]/30 flex items-center justify-center text-[#86a2ff]">
-                <Target className="w-5 h-5" />
-              </div>
-              <h3 className="font-serif-display text-2xl text-white font-medium">
-                Миний 4 том зорилго
+          {/* Right Column: 4 Reasons & 4 Goals */}
+          <div className="lg:col-span-7 flex flex-col justify-between gap-8">
+            {/* 4 Reasons */}
+            <div className="bg-[#051B36] border border-white/10 rounded-xl p-6 sm:p-8">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white mb-6">
+                ЯАГААД ЭНЭ МЭРГЭЖЛИЙГ СОНГОСОН БЭ?
               </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {DREAM_PROFESSION.reasons.map((reason) => (
+                  <div
+                    key={reason.index}
+                    className="p-5 rounded-lg bg-[#021327]/70 border border-white/10"
+                  >
+                    <span className="font-mono-code text-xs font-semibold text-[#38BDF8] tabular-nums block mb-1.5">
+                      {reason.index} · {reason.title}
+                    </span>
+                    <p className="text-sm sm:text-base text-white font-medium leading-snug">
+                      {reason.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="space-y-3.5">
-              {DREAM_PROFESSION.goals.map((goal, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-4 p-3.5 rounded-xl bg-[#09153d]/70 border border-[#8492ff]/20 hover:border-[#8492ff]/40 transition-all"
-                >
-                  <span className="font-mono-code text-sm font-semibold text-[#86a2ff] px-2.5 py-1 rounded bg-[#0c1a4e] border border-[#8492ff]/30">
-                    {goal.number}
-                  </span>
-                  <span className="text-sm text-[#dfe3fb] font-medium">
-                    {goal.text.replace(/^\d+\.\s*/, '')}
-                  </span>
-                </div>
-              ))}
+            {/* 4 Strategic Goals */}
+            <div className="bg-[#051B36] border border-white/10 rounded-xl p-6 sm:p-8">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white mb-6">
+                МИНИЙ <span className="text-[#38BDF8]">4 ТОМ</span> ЗОРИЛГО
+              </h3>
+
+              <div className="divide-y divide-white/10">
+                {DREAM_PROFESSION.goals.map((goal) => (
+                  <div
+                    key={goal.number}
+                    className="py-4 first:pt-0 last:pb-0 flex items-baseline gap-5"
+                  >
+                    <span className="font-display text-2xl font-bold text-[#38BDF8] tabular-nums shrink-0">
+                      {goal.number}
+                    </span>
+                    <p className="text-sm sm:text-base text-[#E2E8F0] font-medium leading-relaxed">
+                      {goal.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

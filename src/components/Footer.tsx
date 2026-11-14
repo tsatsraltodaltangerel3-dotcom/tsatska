@@ -1,6 +1,14 @@
 import React from 'react';
-import { ExternalLink, ArrowUp } from 'lucide-react';
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { TopographicBg } from './TopographicBg';
+
+const FOOTER_LINKS = [
+  { label: 'Нүүр хуудас', url: 'https://graceful-meringue-2b7911.netlify.app/index.html' },
+  { label: 'Миний мэргэжил', url: 'https://graceful-meringue-2b7911.netlify.app/minii-mergjil.html' },
+  { label: 'YouTube клон', url: 'https://graceful-meringue-2b7911.netlify.app/youtube.html' },
+  { label: 'JavaScript апп-ууд', url: 'https://splendid-shortbread-fbecb0.netlify.app/' },
+];
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -8,62 +16,59 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="border-t border-[#8492ff]/20 bg-[#030612]/90 backdrop-blur-lg relative z-20 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Brand & Bio */}
-        <div className="text-center md:text-left space-y-1">
-          <span className="font-serif-display text-xl text-white font-medium">
-            {PERSONAL_INFO.name}
-          </span>
-          <p className="text-xs text-[#7583bd] font-mono-code">
-            Хувийн портфолио сайт · 18 нас · Хөл бөмбөг & Вэб төслүүд
-          </p>
+    <footer className="relative bg-[#021327] text-white border-t border-white/10 overflow-hidden">
+      <TopographicBg className="absolute inset-0 w-full h-full opacity-35" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-10 border-b border-white/10">
+          {/* Brand */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2.5">
+              <span
+                aria-hidden="true"
+                className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#0284C7] via-[#38BDF8] to-[#BAE6FD] inline-block"
+              />
+              <span className="font-display text-2xl font-bold uppercase tracking-wide">
+                {PERSONAL_INFO.name}
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-[#94A3B8]">
+              Хувийн портфолио · {PERSONAL_INFO.age} · Хөл бөмбөг & Вэб төслүүд
+            </p>
+          </div>
+
+          {/* External Project Links */}
+          <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm font-semibold text-[#CBD5E1]">
+            {FOOTER_LINKS.map((link) => (
+              <a
+                key={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 hover:text-[#38BDF8] transition-colors whitespace-nowrap"
+              >
+                <span>{link.label}</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#38BDF8]" />
+              </a>
+            ))}
+          </div>
+
+          {/* Scroll to Top */}
+          <button
+            type="button"
+            onClick={scrollToTop}
+            aria-label="Хуудасны дээд хэсэг рүү очих"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-[#38BDF8] text-white hover:text-[#021327] text-xs font-semibold transition-colors duration-150 cursor-pointer whitespace-nowrap shrink-0"
+          >
+            <span>Дээш очих</span>
+            <ArrowUp className="w-3.5 h-3.5" />
+          </button>
         </div>
 
-        {/* Links to Netlify Pages */}
-        <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-mono-code text-[#b9c4ea]">
-          <a
-            href="https://graceful-meringue-2b7911.netlify.app/index.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white flex items-center gap-1 transition-colors"
-          >
-            <span>Нүүр хуудас</span>
-            <ExternalLink className="w-3 h-3 text-[#7583bd]" />
-          </a>
-          <a
-            href="https://graceful-meringue-2b7911.netlify.app/minii-mergjil.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white flex items-center gap-1 transition-colors"
-          >
-            <span>Миний мэргэжил</span>
-            <ExternalLink className="w-3 h-3 text-[#7583bd]" />
-          </a>
-          <a
-            href="https://graceful-meringue-2b7911.netlify.app/youtube.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white flex items-center gap-1 transition-colors"
-          >
-            <span>YouTube клон</span>
-            <ExternalLink className="w-3 h-3 text-[#7583bd]" />
-          </a>
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#94A3B8]">
+          <span>© 2026 {PERSONAL_INFO.name}. Бүх эрх хамгаалагдсан.</span>
+          <span>{PERSONAL_INFO.latinName} · Portfolio</span>
         </div>
-
-        {/* Scroll To Top */}
-        <button
-          onClick={scrollToTop}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0a153a] hover:bg-[#14235c] border border-[#8492ff]/30 text-xs font-mono-code text-[#dfe3fb] hover:text-white transition-all cursor-pointer"
-          aria-label="Хуудасны дээд хэсэг рүү очих"
-        >
-          <span>Дээш очих</span>
-          <ArrowUp className="w-3.5 h-3.5" />
-        </button>
-      </div>
-
-      <div className="max-w-7xl mx-auto mt-8 pt-6 border-t border-[#8492ff]/10 text-center text-xs font-mono-code text-[#7583bd]">
-        © 2026 {PERSONAL_INFO.name}. Бүх эрх хамгаалагдсан.
       </div>
     </footer>
   );
