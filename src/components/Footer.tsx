@@ -10,7 +10,11 @@ const FOOTER_LINKS = [
   { label: 'JavaScript апп-ууд', url: 'https://splendid-shortbread-fbecb0.netlify.app/' },
 ];
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenAdmin: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -51,6 +55,13 @@ export const Footer: React.FC = () => {
                 <ArrowUpRight className="w-3.5 h-3.5 text-[#38BDF8]" />
               </a>
             ))}
+            <button
+              type="button"
+              onClick={onOpenAdmin}
+              className="inline-flex items-center gap-1 text-[#38BDF8] hover:text-white transition-colors whitespace-nowrap cursor-pointer"
+            >
+              <span>Admin</span>
+            </button>
           </div>
 
           {/* Scroll to Top */}

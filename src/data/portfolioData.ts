@@ -37,6 +37,16 @@ export interface YouTubeVideoItem {
   category: string;
 }
 
+export interface ServiceItem {
+  id: string;
+  index: string;
+  category: string;
+  name: string;
+  description: string;
+  phone: string;
+  highlights: string[];
+}
+
 export const PERSONAL_INFO = {
   name: "Цацралт-Од",
   latinName: "Tsatsralt-Od",
@@ -172,5 +182,28 @@ export const YOUTUBE_VIDEOS: YouTubeVideoItem[] = [
     title: "Онцлох видео 5",
     embedUrl: "https://www.youtube.com/embed/kTJczUoc26U?si=usqDVC6Yxny8_dpZ",
     category: "Бүгд",
+  },
+];
+
+export const SERVICES: ServiceItem[] = [
+  {
+    id: "service-fc-mobile",
+    index: "01",
+    category: "Тоглоом хөгжүүлэлт",
+    name: "FC Mobile тоглоом хөгжүүлэх",
+    description:
+      "FC Mobile багийн OVR өсгөх, тактик ба байрлалын оновчтой тохиргоо хийх, Division Rivals зэрэглэл ахиулах болон тоглоомын ур чадварын зөвлөгөө.",
+    phone: "+976 9911-2233",
+    highlights: ["Багийн OVR хөгжүүлэлт", "Тактик тохиргоо", "Тоглолтын зөвлөгөө"],
+  },
+  {
+    id: "service-football-info",
+    index: "02",
+    category: "Спортын мэдээлэл",
+    name: "Хөл бөмбөгийн талаар мэдээлэл өгөх",
+    description:
+      "Олон улсын болон дотоодын хөл бөмбөгийн лигийн мэдээлэл, тоглолтын задлан шинжилгээ, бэлтгэлийн үндсэн техник ба анхан шатны чиглүүлэг.",
+    phone: "+976 8811-4455",
+    highlights: ["Тоглолтын шинжилгээ", "Бэлтгэлийн чиглүүлэг", "Лигийн мэдээлэл"],
   },
 ];

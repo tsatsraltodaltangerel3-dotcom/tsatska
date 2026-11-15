@@ -1,0 +1,246 @@
+{
+  "entities": {
+    "GuestbookMessage": {
+      "title": "GuestbookMessage",
+      "description": "Public supporter message on the portfolio guestbook.",
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the message author.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "authorName": {
+          "type": "string",
+          "description": "Display name of the supporter.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "location": {
+          "type": "string",
+          "description": "Optional city or football club name.",
+          "maxLength": 80
+        },
+        "message": {
+          "type": "string",
+          "description": "Supporter message content.",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last update timestamp."
+        }
+      },
+      "required": ["authorId", "authorName", "message", "createdAt"]
+    },
+    "SupporterCheer": {
+      "title": "SupporterCheer",
+      "description": "Single cheer/endorsement record per authenticated supporter.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID matching document ID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "supporterName": {
+          "type": "string",
+          "description": "Public display name of supporter.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        }
+      },
+      "required": ["userId", "supporterName", "createdAt"]
+    },
+    "TrainingLog": {
+      "title": "TrainingLog",
+      "description": "Athlete football training session log managed by the portfolio owner.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Admin UID who created the training log.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "description": "Training session title.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "focusArea": {
+          "type": "string",
+          "description": "Skill or conditioning focus.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "durationMinutes": {
+          "type": "number",
+          "description": "Session duration in minutes."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "completed"],
+          "description": "Session completion status."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp."
+        }
+      },
+      "required": ["ownerId", "title", "focusArea", "durationMinutes", "status", "createdAt"]
+    },
+    "ServiceOrder": {
+      "title": "ServiceOrder",
+      "description": "Service booking or contact inquiry submitted from the portfolio modal.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Optional Firebase Auth UID if submitted while signed in.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Client name.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "contact": {
+          "type": "string",
+          "description": "Client phone number or email address (PII).",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "serviceName": {
+          "type": "string",
+          "description": "Selected service name or empty for general contact.",
+          "maxLength": 120
+        },
+        "message": {
+          "type": "string",
+          "description": "Optional additional order details.",
+          "maxLength": 600
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "contacted", "completed"],
+          "description": "Order processing status managed by portfolio admin."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last update timestamp."
+        }
+      },
+      "required": ["name", "contact", "status", "createdAt"]
+    },
+    "PortfolioService": {
+      "title": "PortfolioService",
+      "description": "Admin-managed portfolio service item displayed in Services section.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Admin UID who created the service.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "index": {
+          "type": "string",
+          "description": "Display index (e.g. 01, 02).",
+          "minLength": 1,
+          "maxLength": 10
+        },
+        "category": {
+          "type": "string",
+          "description": "Service category label.",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "name": {
+          "type": "string",
+          "description": "Service title.",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "description": {
+          "type": "string",
+          "description": "Service description.",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "phone": {
+          "type": "string",
+          "description": "Public business contact phone for the service.",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "highlights": {
+          "type": "array",
+          "description": "Up to 6 short highlight labels."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last update timestamp."
+        }
+      },
+      "required": ["ownerId", "index", "category", "name", "description", "phone", "highlights", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/guestbook/{messageId}": {
+      "schema": { "$ref": "#/entities/GuestbookMessage" },
+      "description": "Public supporter guestbook messages."
+    },
+    "/cheers/{userId}": {
+      "schema": { "$ref": "#/entities/SupporterCheer" },
+      "description": "One-per-user supporter cheers."
+    },
+    "/trainingLogs/{logId}": {
+      "schema": { "$ref": "#/entities/TrainingLog" },
+      "description": "Owner-managed football training sessions."
+    },
+    "/serviceOrders/{orderId}": {
+      "schema": { "$ref": "#/entities/ServiceOrder" },
+      "description": "Service booking and contact inquiries with PII restricted to admin and creator."
+    },
+    "/services/{serviceId}": {
+      "schema": { "$ref": "#/entities/PortfolioService" },
+      "description": "Public service catalog managed by verified portfolio admin."
+    }
+  }
+}

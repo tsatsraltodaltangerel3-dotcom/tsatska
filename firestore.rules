@@ -1,0 +1,209 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global safety net: deny everything by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isVerified() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.email == 'tsatsraltodaltangerel3@gmail.com'
+      );
+    }
+
+    function isValidGuestbookData(data) {
+      return data.keys().hasAll(['authorId', 'authorName', 'message', 'createdAt']) &&
+        data.keys().hasOnly(['authorId', 'authorName', 'location', 'message', 'createdAt', 'updatedAt']) &&
+        isValidId(data.authorId) &&
+        data.authorName is string && data.authorName.size() >= 1 && data.authorName.size() <= 80 &&
+        (!('location' in data) || (data.location is string && data.location.size() <= 80)) &&
+        data.message is string && data.message.size() >= 1 && data.message.size() <= 400 &&
+        data.createdAt is timestamp &&
+        (!('updatedAt' in data) || data.updatedAt is timestamp);
+    }
+
+    function isValidCheerData(data) {
+      return data.keys().hasAll(['userId', 'supporterName', 'createdAt']) &&
+        data.keys().hasOnly(['userId', 'supporterName', 'createdAt']) &&
+        isValidId(data.userId) &&
+        data.supporterName is string && data.supporterName.size() >= 1 && data.supporterName.size() <= 80 &&
+        data.createdAt is timestamp;
+    }
+
+    function isValidTrainingLogData(data) {
+      return data.keys().hasAll(['ownerId', 'title', 'focusArea', 'durationMinutes', 'status', 'createdAt']) &&
+        data.keys().hasOnly(['ownerId', 'title', 'focusArea', 'durationMinutes', 'status', 'createdAt', 'updatedAt']) &&
+        isValidId(data.ownerId) &&
+        data.title is string && data.title.size() >= 1 && data.title.size() <= 120 &&
+        data.focusArea is string && data.focusArea.size() >= 1 && data.focusArea.size() <= 80 &&
+        data.durationMinutes is number && data.durationMinutes >= 5 && data.durationMinutes <= 600 &&
+        data.status in ['planned', 'completed'] &&
+        data.createdAt is timestamp &&
+        (!('updatedAt' in data) || data.updatedAt is timestamp);
+    }
+
+    function isValidServiceOrderData(data) {
+      return data.keys().hasAll(['name', 'contact', 'status', 'createdAt']) &&
+        data.keys().hasOnly(['userId', 'name', 'contact', 'serviceName', 'message', 'status', 'createdAt', 'updatedAt']) &&
+        (!('userId' in data) || isValidId(data.userId)) &&
+        data.name is string && data.name.size() >= 1 && data.name.size() <= 100 &&
+        data.contact is string && data.contact.size() >= 1 && data.contact.size() <= 120 &&
+        (!('serviceName' in data) || (data.serviceName is string && data.serviceName.size() <= 120)) &&
+        (!('message' in data) || (data.message is string && data.message.size() <= 600)) &&
+        data.status in ['new', 'contacted', 'completed'] &&
+        data.createdAt is timestamp &&
+        (!('updatedAt' in data) || data.updatedAt is timestamp);
+    }
+
+    function isValidPortfolioServiceData(data) {
+      return data.keys().hasAll(['ownerId', 'index', 'category', 'name', 'description', 'phone', 'highlights', 'createdAt']) &&
+        data.keys().hasOnly(['ownerId', 'index', 'category', 'name', 'description', 'phone', 'highlights', 'createdAt', 'updatedAt']) &&
+        isValidId(data.ownerId) &&
+        data.index is string && data.index.size() >= 1 && data.index.size() <= 10 &&
+        data.category is string && data.category.size() >= 1 && data.category.size() <= 60 &&
+        data.name is string && data.name.size() >= 1 && data.name.size() <= 100 &&
+        data.description is string && data.description.size() >= 1 && data.description.size() <= 500 &&
+        data.phone is string && data.phone.size() >= 1 && data.phone.size() <= 40 &&
+        data.highlights is list && data.highlights.size() >= 1 && data.highlights.size() <= 6 &&
+        data.highlights[0] is string && data.highlights[0].size() <= 60 &&
+        data.createdAt is timestamp &&
+        (!('updatedAt' in data) || data.updatedAt is timestamp);
+    }
+
+    // Public supporter guestbook (no PII stored)
+    match /guestbook/{messageId} {
+      allow get: if isValidId(messageId);
+      allow list: if true;
+      allow create: if isVerified() &&
+        isValidId(messageId) &&
+        isValidGuestbookData(incoming()) &&
+        incoming().authorId == request.auth.uid &&
+        incoming().createdAt == request.time &&
+        !('updatedAt' in incoming());
+      allow update: if isVerified() &&
+        isValidId(messageId) &&
+        isValidGuestbookData(incoming()) &&
+        (isAdmin() || existing().authorId == request.auth.uid) &&
+        incoming().authorId == existing().authorId &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['message', 'location', 'updatedAt']);
+      allow delete: if isVerified() &&
+        isValidId(messageId) &&
+        (isAdmin() || existing().authorId == request.auth.uid);
+    }
+
+    // One-per-user supporter cheers (no PII stored)
+    match /cheers/{userId} {
+      allow get: if isValidId(userId);
+      allow list: if true;
+      allow create: if isVerified() &&
+        isValidId(userId) &&
+        request.auth.uid == userId &&
+        isValidCheerData(incoming()) &&
+        incoming().userId == request.auth.uid &&
+        incoming().createdAt == request.time;
+      allow update: if false;
+      allow delete: if isVerified() &&
+        isValidId(userId) &&
+        (request.auth.uid == userId || isAdmin());
+    }
+
+    // Athlete training logs managed by verified portfolio owner
+    match /trainingLogs/{logId} {
+      allow get: if isValidId(logId);
+      allow list: if true;
+      allow create: if isAdmin() &&
+        isValidId(logId) &&
+        isValidTrainingLogData(incoming()) &&
+        incoming().ownerId == request.auth.uid &&
+        incoming().createdAt == request.time &&
+        !('updatedAt' in incoming());
+      allow update: if isAdmin() &&
+        isValidId(logId) &&
+        isValidTrainingLogData(incoming()) &&
+        existing().status != 'completed' &&
+        incoming().ownerId == existing().ownerId &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['status', 'durationMinutes', 'updatedAt']);
+      allow delete: if isAdmin() && isValidId(logId);
+    }
+
+    // Service booking & contact inquiries (contains PII: contact)
+    match /serviceOrders/{orderId} {
+      allow get: if isValidId(orderId) && (
+        isAdmin() ||
+        (isVerified() && 'userId' in existing() && existing().userId == request.auth.uid)
+      );
+      allow list: if isAdmin() || (
+        isVerified() &&
+        'userId' in existing() &&
+        existing().userId == request.auth.uid
+      );
+      allow create: if isValidId(orderId) &&
+        isValidServiceOrderData(incoming()) &&
+        incoming().status == 'new' &&
+        incoming().createdAt == request.time &&
+        !('updatedAt' in incoming()) &&
+        (
+          (!('userId' in incoming())) ||
+          (isVerified() && incoming().userId == request.auth.uid)
+        );
+      allow update: if isAdmin() &&
+        isValidId(orderId) &&
+        isValidServiceOrderData(incoming()) &&
+        existing().status != 'completed' &&
+        (
+          (!('userId' in existing()) && !('userId' in incoming())) ||
+          ('userId' in existing() && 'userId' in incoming() && incoming().userId == existing().userId)
+        ) &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt']);
+      allow delete: if isAdmin() && isValidId(orderId);
+    }
+
+    // Public portfolio services catalog managed by verified admin
+    match /services/{serviceId} {
+      allow get: if isValidId(serviceId);
+      allow list: if true;
+      allow create: if isAdmin() &&
+        isValidId(serviceId) &&
+        isValidPortfolioServiceData(incoming()) &&
+        incoming().ownerId == request.auth.uid &&
+        incoming().createdAt == request.time &&
+        !('updatedAt' in incoming());
+      allow update: if isAdmin() &&
+        isValidId(serviceId) &&
+        isValidPortfolioServiceData(incoming()) &&
+        incoming().ownerId == existing().ownerId &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['index', 'category', 'name', 'description', 'phone', 'highlights', 'updatedAt']);
+      allow delete: if isAdmin() && isValidId(serviceId);
+    }
+  }
+}
