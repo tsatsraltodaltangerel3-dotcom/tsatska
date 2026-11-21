@@ -31,7 +31,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenAdmin }) =>
             aria-hidden="true"
             className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#0284C7] via-[#38BDF8] to-[#BAE6FD] shadow-[0_0_16px_rgba(56,189,248,0.45)] inline-block shrink-0"
           />
-          <span>{PERSONAL_INFO.name}</span>
+          <span>football</span>
         </a>
 
         {/* Zone 2: Single-line Navigation Links */}

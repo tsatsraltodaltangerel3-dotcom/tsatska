@@ -551,19 +551,25 @@ export const CommunitySection: React.FC = () => {
                     ? `${user.displayName || 'Зочин'} нэрээр нийтлэгдэнэ`
                     : 'Нийтлэхийн тулд Google баталгаажуулалт хийнэ'}
                 </span>
-                <button
-                  type="submit"
-                  disabled={submittingMessage}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
-                >
-                  <span>
-                    {!user
-                      ? 'Google-ээр нэвтрэх'
-                      : submittingMessage
-                      ? 'Илгээж байна...'
-                      : 'Сэтгэгдэл үлдээх'}
-                  </span>
-                </button>
+                {user ? (
+                  <button
+                    type="submit"
+                    disabled={submittingMessage}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  >
+                    <span>
+                      {submittingMessage ? 'Илгээж байна...' : 'Сэтгэгдэл үлдээх'}
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={signInWithGoogle}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  >
+                    <span>Google-ээр нэвтрэх</span>
+                  </button>
+                )}
               </div>
             </form>
 
