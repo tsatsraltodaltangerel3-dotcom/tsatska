@@ -20,17 +20,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
   };
 
   return (
-    <footer className="relative bg-[#021327] text-white border-t border-white/10 overflow-hidden">
+    <footer className="relative bg-[#070102] text-white border-t border-red-500/20 overflow-hidden">
       <TopographicBg className="absolute inset-0 w-full h-full opacity-35" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-10 border-b border-white/10">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-10 border-b border-red-500/15">
           {/* Brand */}
           <div className="space-y-2">
             <div className="flex items-center gap-2.5">
               <span
                 aria-hidden="true"
-                className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#0284C7] via-[#38BDF8] to-[#BAE6FD] inline-block"
+                className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#7F1D1D] via-[#DC2626] to-[#FCA5A5] inline-block"
               />
               <span className="font-display text-2xl font-bold uppercase tracking-wide">
                 {PERSONAL_INFO.name}
@@ -49,16 +49,16 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 hover:text-[#38BDF8] transition-colors whitespace-nowrap"
+                className="inline-flex items-center gap-1 hover:text-[#EF4444] transition-colors whitespace-nowrap"
               >
                 <span>{link.label}</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#38BDF8]" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#EF4444]" />
               </a>
             ))}
             <button
               type="button"
               onClick={onOpenAdmin}
-              className="inline-flex items-center gap-1 text-[#38BDF8] hover:text-white transition-colors whitespace-nowrap cursor-pointer"
+              className="inline-flex items-center gap-1 text-[#EF4444] hover:text-white transition-colors whitespace-nowrap cursor-pointer"
             >
               <span>Admin</span>
             </button>
@@ -69,7 +69,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
             type="button"
             onClick={scrollToTop}
             aria-label="Хуудасны дээд хэсэг рүү очих"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-[#38BDF8] text-white hover:text-[#021327] text-xs font-semibold transition-colors duration-150 cursor-pointer whitespace-nowrap shrink-0"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-[#DC2626] text-white text-xs font-semibold transition-colors duration-150 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>Дээш очих</span>
             <ArrowUp className="w-3.5 h-3.5" />

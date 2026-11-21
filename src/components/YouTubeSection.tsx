@@ -14,23 +14,23 @@ export const YouTubeSection: React.FC = () => {
       : YOUTUBE_VIDEOS.filter((v) => v.category === activeCategory || v.category === 'Бүгд');
 
   return (
-    <section id="youtube" className="py-20 lg:py-28 bg-white text-[#021327]">
+    <section id="youtube" className="py-20 lg:py-28 bg-white text-[#070102]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-10 mb-10 border-b border-slate-200">
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0284C7] mb-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#DC2626] mb-2">
               Видео цуглуулга ба медиа
             </p>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#021327] [text-wrap:balance]">
-              YOUTUBE <span className="text-[#0284C7]">ХУУДАС</span>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#070102] [text-wrap:balance]">
+              YOUTUBE <span className="text-[#DC2626]">ХУУДАС</span>
             </h2>
           </div>
 
           {/* Channel Action Row */}
           <div className="flex flex-wrap items-center justify-between lg:justify-end gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full overflow-hidden border border-slate-200 bg-[#021327] shrink-0">
+              <div className="w-11 h-11 rounded-full overflow-hidden border border-slate-200 bg-[#070102] shrink-0">
                 {!avatarError ? (
                   <img
                     src={PERSONAL_INFO.studioImage}
@@ -40,13 +40,13 @@ export const YouTubeSection: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-[#38BDF8]">
+                  <div className="w-full h-full flex items-center justify-center text-[#EF4444]">
                     <Video className="w-5 h-5" />
                   </div>
                 )}
               </div>
               <div>
-                <p className="text-sm font-bold text-[#021327]">{PERSONAL_INFO.name} — Суваг</p>
+                <p className="text-sm font-bold text-[#070102]">{PERSONAL_INFO.name} — Суваг</p>
                 <p className="text-xs text-slate-500">youtube.html төслийн шууд цомог</p>
               </div>
             </div>
@@ -55,7 +55,7 @@ export const YouTubeSection: React.FC = () => {
               href="https://graceful-meringue-2b7911.netlify.app/youtube.html"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#021327] hover:bg-[#0284C7] text-white text-xs font-semibold transition-colors duration-150 whitespace-nowrap shrink-0"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#070102] hover:bg-[#DC2626] text-white text-xs font-semibold transition-colors duration-150 whitespace-nowrap shrink-0"
             >
               <span>YouTube хуудсыг нээх</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -81,8 +81,8 @@ export const YouTubeSection: React.FC = () => {
                   onClick={() => setActiveCategory(cat)}
                   className={`px-4 py-2 rounded-md text-xs sm:text-sm font-semibold transition-colors duration-150 cursor-pointer whitespace-nowrap shrink-0 ${
                     active
-                      ? 'bg-[#021327] text-white shadow-sm'
-                      : 'text-slate-600 hover:text-[#021327]'
+                      ? 'bg-[#070102] text-white shadow-sm'
+                      : 'text-slate-600 hover:text-[#DC2626]'
                   }`}
                 >
                   {cat}
@@ -103,7 +103,7 @@ export const YouTubeSection: React.FC = () => {
               key={`${video.id}-${idx}`}
               className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex flex-col justify-between"
             >
-              <div className="relative w-full aspect-video bg-[#021327]">
+              <div className="relative w-full aspect-video bg-[#070102]">
                 <iframe
                   src={video.embedUrl}
                   title={video.title}
@@ -115,10 +115,10 @@ export const YouTubeSection: React.FC = () => {
               </div>
 
               <div className="p-4 flex items-center justify-between gap-3 bg-white border-t border-slate-200">
-                <h3 className="text-sm sm:text-base font-bold text-[#021327] truncate">
+                <h3 className="text-sm sm:text-base font-bold text-[#070102] truncate">
                   {video.title}
                 </h3>
-                <span className="text-xs font-semibold text-[#0284C7] whitespace-nowrap shrink-0">
+                <span className="text-xs font-semibold text-[#DC2626] whitespace-nowrap shrink-0">
                   {video.category}
                 </span>
               </div>

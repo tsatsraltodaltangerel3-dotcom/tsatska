@@ -9,6 +9,7 @@ import { HeroMurmurScene } from './components/HeroMurmurScene';
 import { WorksSection } from './components/WorksSection';
 import { DreamProfessionSection } from './components/DreamProfessionSection';
 import { FactsSection } from './components/FactsSection';
+import { FootballInfoSection } from './components/FootballInfoSection';
 import { YouTubeSection } from './components/YouTubeSection';
 import { ServicesSection } from './components/ServicesSection';
 import { CommunitySection } from './components/CommunitySection';
@@ -53,11 +54,16 @@ export default function App() {
   };
 
   useEffect(() => {
+    ambientAudio.preload();
+    const unsubscribe = ambientAudio.subscribe((playing) => {
+      setIsPlaying(playing);
+    });
     const onHashChange = () => {
       setIsAdminView(window.location.hash === '#admin');
     };
     window.addEventListener('hashchange', onHashChange);
     return () => {
+      unsubscribe();
       window.removeEventListener('hashchange', onHashChange);
       ambientAudio.stop();
     };
@@ -66,11 +72,11 @@ export default function App() {
   return (
     <FirebaseProvider>
       {isAdminView ? (
-        <div className="min-h-screen bg-[#021327] text-white font-sans selection:bg-[#38BDF8] selection:text-[#021327]">
+        <div className="min-h-screen bg-[#070102] text-white font-sans selection:bg-[#DC2626] selection:text-white">
           <AdminPage onExitAdmin={handleExitAdmin} />
         </div>
       ) : (
-        <div className="min-h-screen bg-[#021327] text-white font-sans selection:bg-[#38BDF8] selection:text-[#021327]">
+        <div className="min-h-screen bg-[#070102] text-white font-sans selection:bg-[#DC2626] selection:text-white">
           <Header
             onOpenContact={() => handleOpenOrderModal('')}
             onOpenAdmin={handleOpenAdmin}
@@ -81,6 +87,7 @@ export default function App() {
             <WorksSection />
             <DreamProfessionSection />
             <FactsSection />
+            <FootballInfoSection />
             <YouTubeSection />
             <ServicesSection onOrderService={handleOpenOrderModal} />
             <CommunitySection />

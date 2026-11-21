@@ -427,7 +427,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
   // Gate 1: Auth loading
   if (!authReady) {
     return (
-      <div className="min-h-screen bg-[#021327] text-white flex items-center justify-center p-6">
+      <div className="min-h-screen bg-[#070102] text-white flex items-center justify-center p-6">
         <div className="text-center space-y-3">
           <p className="font-display text-2xl uppercase tracking-wide text-white">
             Firebase баталгаажуулалт шалгаж байна...
@@ -441,10 +441,10 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
   // Gate 2: Admin Login
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#021327] text-white flex items-center justify-center p-4 sm:p-6">
-        <div className="w-full max-w-md bg-[#051B36] border border-white/15 rounded-2xl p-6 sm:p-8 space-y-6">
+      <div className="min-h-screen bg-[#070102] text-white flex items-center justify-center p-4 sm:p-6">
+        <div className="w-full max-w-md bg-[#140407] border border-white/15 rounded-2xl p-6 sm:p-8 space-y-6">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#38BDF8]">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#EF4444]">
               Firebase Auth · Admin Portal
             </p>
             <h1 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-white">
@@ -469,7 +469,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
             <button
               type="button"
               onClick={signInWithGoogle}
-              className="w-full inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-sm font-semibold transition-colors cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-full bg-[#DC2626] hover:bg-[#EF4444] text-white text-sm font-semibold transition-colors cursor-pointer"
             >
               <LogIn className="w-4 h-4" aria-hidden="true" />
               <span>Google-ээр нэвтрэх</span>
@@ -492,8 +492,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
   // Gate 3: Signed in, but not Admin
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-[#021327] text-white flex items-center justify-center p-4 sm:p-6">
-        <div className="w-full max-w-md bg-[#051B36] border border-white/15 rounded-2xl p-6 sm:p-8 space-y-6">
+      <div className="min-h-screen bg-[#070102] text-white flex items-center justify-center p-4 sm:p-6">
+        <div className="w-full max-w-md bg-[#140407] border border-white/15 rounded-2xl p-6 sm:p-8 space-y-6">
           <div className="flex items-center gap-3 text-amber-300">
             <ShieldAlert className="w-6 h-6 shrink-0" aria-hidden="true" />
             <h1 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white">
@@ -509,7 +509,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
             <button
               type="button"
               onClick={logOut}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#DC2626] hover:bg-[#EF4444] text-white text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
             >
               <LogOut className="w-4 h-4" aria-hidden="true" />
               <span>Бүртгэлээс гарах</span>
@@ -552,15 +552,15 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#021327] text-white flex flex-col lg:flex-row">
+    <div className="min-h-screen bg-[#070102] text-white flex flex-col lg:flex-row">
       {/* Sidebar */}
-      <aside className="lg:w-64 bg-[#051B36] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-between shrink-0">
+      <aside className="lg:w-64 bg-[#140407] border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-between shrink-0">
         <div className="p-5 sm:p-6">
           <div className="flex items-center justify-between gap-3 pb-5 mb-5 border-b border-white/10">
             <div className="flex items-center gap-2.5 min-w-0">
               <span
                 aria-hidden="true"
-                className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#0284C7] via-[#38BDF8] to-[#BAE6FD] shrink-0"
+                className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#7F1D1D] via-[#DC2626] to-[#FCA5A5] shrink-0"
               />
               <span className="font-display text-xl font-bold uppercase tracking-wide truncate">
                 ADMIN
@@ -586,7 +586,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                   onClick={() => setActiveTab(item.id)}
                   className={`flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                     active
-                      ? 'bg-[#38BDF8] text-[#021327]'
+                      ? 'bg-[#DC2626] text-white'
                       : 'text-[#CBD5E1] hover:text-white hover:bg-white/5'
                   }`}
                 >
@@ -597,7 +597,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                   {typeof item.count === 'number' && (
                     <span
                       className={`font-mono-code text-xs tabular-nums ${
-                        active ? 'text-[#021327]/80' : 'text-[#94A3B8]'
+                        active ? 'text-white/90' : 'text-[#94A3B8]'
                       }`}
                     >
                       {item.count}
@@ -641,7 +641,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="h-16 px-4 sm:px-8 border-b border-white/10 bg-[#021327] flex items-center justify-between gap-4">
+        <header className="h-16 px-4 sm:px-8 border-b border-white/10 bg-[#070102] flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-sm font-semibold min-w-0">
             <span className="text-[#94A3B8]">Admin</span>
             <span className="text-[#64748B]" aria-hidden="true">/</span>
@@ -656,7 +656,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                   resetServiceForm();
                   setShowServiceForm(true);
                 }}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#DC2626] hover:bg-[#EF4444] text-white text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Шинэ үйлчилгээ</span>
@@ -699,7 +699,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
           {activeTab === 'dashboard' && (
             <div className="space-y-8">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#38BDF8] mb-1">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#EF4444] mb-1">
                   Firestore бодит цагийн нэгтгэл
                 </p>
                 <h1 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-white">
@@ -709,19 +709,19 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
 
               {/* 4 KPI Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-                <div className="bg-[#051B36] border border-white/10 rounded-xl p-6">
+                <div className="bg-[#140407] border border-white/10 rounded-xl p-6">
                   <p className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8] mb-2">
                     Нийт захиалга
                   </p>
                   <p className="font-display text-4xl font-bold text-white tabular-nums">
                     {serviceOrders.length}
                   </p>
-                  <p className="text-xs text-[#38BDF8] mt-2">
+                  <p className="text-xs text-[#EF4444] mt-2">
                     Үйлчилгээний захиалга (Orders)
                   </p>
                 </div>
 
-                <div className="bg-[#051B36] border border-white/10 rounded-xl p-6">
+                <div className="bg-[#140407] border border-white/10 rounded-xl p-6">
                   <p className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8] mb-2">
                     Холбоо барих хүсэлт
                   </p>
@@ -733,7 +733,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                   </p>
                 </div>
 
-                <div className="bg-[#051B36] border border-white/10 rounded-xl p-6">
+                <div className="bg-[#140407] border border-white/10 rounded-xl p-6">
                   <p className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8] mb-2">
                     Үйлчилгээний тоо
                   </p>
@@ -745,7 +745,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                   </p>
                 </div>
 
-                <div className="bg-[#051B36] border border-white/10 rounded-xl p-6">
+                <div className="bg-[#140407] border border-white/10 rounded-xl p-6">
                   <p className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8] mb-2">
                     Дэмжигчид ба сэтгэгдэл
                   </p>
@@ -759,7 +759,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
               </div>
 
               {/* Status Breakdown */}
-              <div className="bg-[#051B36] border border-white/10 rounded-xl p-6 flex flex-wrap items-center justify-between gap-4">
+              <div className="bg-[#140407] border border-white/10 rounded-xl p-6 flex flex-wrap items-center justify-between gap-4">
                 <div className="space-y-1">
                   <h2 className="font-display text-xl font-bold uppercase tracking-tight text-white">
                     Захиалга болон хүсэлтийн төлөв
@@ -770,7 +770,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                 </div>
                 <div className="flex flex-wrap items-center gap-6 text-sm font-semibold tabular-nums">
                   <span className="text-amber-300">Шинэ: {statusCounts.new}</span>
-                  <span className="text-[#38BDF8]">Холбогдсон: {statusCounts.contacted}</span>
+                  <span className="text-[#EF4444]">Холбогдсон: {statusCounts.contacted}</span>
                   <span className="text-emerald-400">Дууссан: {statusCounts.completed}</span>
                 </div>
               </div>
@@ -778,7 +778,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
               {/* Recent Orders & Contact Split */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Recent Service Orders */}
-                <div className="bg-[#051B36] border border-white/10 rounded-xl p-6">
+                <div className="bg-[#140407] border border-white/10 rounded-xl p-6">
                   <div className="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-white/10">
                     <h2 className="font-display text-xl font-bold uppercase tracking-tight text-white">
                       Сүүлийн захиалгууд
@@ -786,7 +786,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                     <button
                       type="button"
                       onClick={() => setActiveTab('orders')}
-                      className="text-xs font-semibold text-[#38BDF8] hover:underline cursor-pointer"
+                      className="text-xs font-semibold text-[#EF4444] hover:underline cursor-pointer"
                     >
                       Бүгдийг харах
                     </button>
@@ -804,7 +804,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                         <div key={order.id} className="py-3 first:pt-0 last:pb-0 flex items-center justify-between gap-3">
                           <div className="min-w-0">
                             <p className="text-sm font-semibold text-white truncate">
-                              {order.name} · <span className="text-[#38BDF8]">{order.contact}</span>
+                              {order.name} · <span className="text-[#EF4444]">{order.contact}</span>
                             </p>
                             <p className="text-xs text-[#94A3B8] truncate">
                               {order.serviceName} · {formatDateTime(order.createdAt)}
@@ -820,7 +820,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                 </div>
 
                 {/* Recent Contact Inquiries */}
-                <div className="bg-[#051B36] border border-white/10 rounded-xl p-6">
+                <div className="bg-[#140407] border border-white/10 rounded-xl p-6">
                   <div className="flex items-center justify-between gap-4 pb-4 mb-4 border-b border-white/10">
                     <h2 className="font-display text-xl font-bold uppercase tracking-tight text-white">
                       Холбоо барих хүсэлтүүд
@@ -828,7 +828,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                     <button
                       type="button"
                       onClick={() => setActiveTab('contact')}
-                      className="text-xs font-semibold text-[#38BDF8] hover:underline cursor-pointer"
+                      className="text-xs font-semibold text-[#EF4444] hover:underline cursor-pointer"
                     >
                       Бүгдийг харах
                     </button>
@@ -846,7 +846,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                         <div key={item.id} className="py-3 first:pt-0 last:pb-0 flex items-center justify-between gap-3">
                           <div className="min-w-0">
                             <p className="text-sm font-semibold text-white truncate">
-                              {item.name} · <span className="text-[#38BDF8]">{item.contact}</span>
+                              {item.name} · <span className="text-[#EF4444]">{item.contact}</span>
                             </p>
                             <p className="text-xs text-[#94A3B8] truncate">
                               {item.message || 'Мессежгүй'} · {formatDateTime(item.createdAt)}
@@ -869,7 +869,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
             <div className="space-y-6">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#38BDF8] mb-1">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#EF4444] mb-1">
                     Firestore · serviceOrders
                   </p>
                   <h1 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-white">
@@ -885,11 +885,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                       value={orderSearch}
                       onChange={(e) => setOrderSearch(e.target.value)}
                       placeholder="Нэр, утас, үйлчилгээ..."
-                      className="pl-9 pr-4 py-2 rounded-lg bg-[#051B36] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8]"
+                      className="pl-9 pr-4 py-2 rounded-lg bg-[#140407] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444]"
                     />
                   </div>
 
-                  <div className="inline-flex items-center gap-1 p-1 bg-[#051B36] border border-white/10 rounded-lg">
+                  <div className="inline-flex items-center gap-1 p-1 bg-[#140407] border border-white/10 rounded-lg">
                     {(['all', 'new', 'contacted', 'completed'] as const).map((st) => (
                       <button
                         key={st}
@@ -897,7 +897,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                         onClick={() => setOrderStatusFilter(st)}
                         className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                           orderStatusFilter === st
-                            ? 'bg-[#38BDF8] text-[#021327]'
+                            ? 'bg-[#DC2626] text-white'
                             : 'text-[#CBD5E1] hover:text-white'
                         }`}
                       >
@@ -908,7 +908,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                 </div>
               </div>
 
-              <div className="bg-[#051B36] border border-white/10 rounded-xl overflow-hidden">
+              <div className="bg-[#140407] border border-white/10 rounded-xl overflow-hidden">
                 {loadingData ? (
                   <div className="p-8 text-sm text-[#94A3B8]">Захиалгуудыг ачааллаж байна...</div>
                 ) : filteredOrders.length === 0 ? (
@@ -926,7 +926,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                           <div className="flex flex-wrap items-center gap-2 text-xs text-[#94A3B8]">
                             <span className="text-sm font-bold text-white">{order.name}</span>
                             <span aria-hidden="true">·</span>
-                            <span className="font-semibold text-[#38BDF8]">{order.contact}</span>
+                            <span className="font-semibold text-[#EF4444]">{order.contact}</span>
                             <span aria-hidden="true">·</span>
                             <span className="tabular-nums">{formatDateTime(order.createdAt)}</span>
                             <span aria-hidden="true">·</span>
@@ -935,7 +935,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                                 order.status === 'completed'
                                   ? 'text-emerald-400'
                                   : order.status === 'contacted'
-                                  ? 'text-[#38BDF8]'
+                                  ? 'text-[#EF4444]'
                                   : 'text-amber-300'
                               }`}
                             >
@@ -959,7 +959,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                             <button
                               type="button"
                               onClick={() => handleUpdateOrderStatus(order.id, 'contacted')}
-                              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/10 hover:bg-[#38BDF8] text-xs font-semibold text-white hover:text-[#021327] transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/10 hover:bg-[#DC2626] text-xs font-semibold text-white transition-colors cursor-pointer"
                             >
                               <Clock className="w-3.5 h-3.5" aria-hidden="true" />
                               <span>Холбогдсон</span>
@@ -969,7 +969,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                             <button
                               type="button"
                               onClick={() => handleUpdateOrderStatus(order.id, 'completed')}
-                              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#38BDF8] hover:bg-emerald-400 text-xs font-semibold text-[#021327] transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#DC2626] hover:bg-emerald-600 text-xs font-semibold text-white transition-colors cursor-pointer"
                             >
                               <Check className="w-3.5 h-3.5" aria-hidden="true" />
                               <span>Дуусгах</span>
@@ -997,7 +997,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
             <div className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#38BDF8] mb-1">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#EF4444] mb-1">
                     Firestore · services каталог
                   </p>
                   <h1 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-white">
@@ -1010,7 +1010,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                     type="button"
                     disabled={seedingServices}
                     onClick={handleSeedDefaultServices}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-[#38BDF8] text-white hover:text-[#021327] text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-[#DC2626] text-white hover:text-white text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap"
                   >
                     <Plus className="w-4 h-4" />
                     <span>
@@ -1026,7 +1026,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
               {showServiceForm && (
                 <form
                   onSubmit={handleSaveService}
-                  className="bg-[#051B36] border border-[#38BDF8]/40 rounded-xl p-6 space-y-4"
+                  className="bg-[#140407] border border-[#EF4444]/40 rounded-xl p-6 space-y-4"
                 >
                   <div className="flex items-center justify-between pb-3 border-b border-white/10">
                     <h2 className="font-display text-xl font-bold uppercase tracking-tight text-white">
@@ -1054,7 +1054,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                         value={svcIndex}
                         onChange={(e) => setSvcIndex(e.target.value)}
                         placeholder="01"
-                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white focus:outline-none focus:border-[#38BDF8]"
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070102] border border-white/15 text-sm text-white focus:outline-none focus:border-[#EF4444]"
                       />
                     </div>
                     <div>
@@ -1068,7 +1068,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                         value={svcCategory}
                         onChange={(e) => setSvcCategory(e.target.value)}
                         placeholder="Тоглоом хөгжүүлэлт"
-                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white focus:outline-none focus:border-[#38BDF8]"
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070102] border border-white/15 text-sm text-white focus:outline-none focus:border-[#EF4444]"
                       />
                     </div>
                     <div>
@@ -1082,7 +1082,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                         value={svcPhone}
                         onChange={(e) => setSvcPhone(e.target.value)}
                         placeholder="+976 9911-2233"
-                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white focus:outline-none focus:border-[#38BDF8]"
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-[#070102] border border-white/15 text-sm text-white focus:outline-none focus:border-[#EF4444]"
                       />
                     </div>
                   </div>
@@ -1098,7 +1098,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                       value={svcName}
                       onChange={(e) => setSvcName(e.target.value)}
                       placeholder="FC Mobile тоглоом хөгжүүлэх"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white focus:outline-none focus:border-[#38BDF8]"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070102] border border-white/15 text-sm text-white focus:outline-none focus:border-[#EF4444]"
                     />
                   </div>
 
@@ -1113,7 +1113,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                       value={svcDescription}
                       onChange={(e) => setSvcDescription(e.target.value)}
                       placeholder="Үйлчилгээний дэлгэрэнгүй тайлбар..."
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white focus:outline-none focus:border-[#38BDF8] resize-none"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070102] border border-white/15 text-sm text-white focus:outline-none focus:border-[#EF4444] resize-none"
                     />
                   </div>
 
@@ -1126,7 +1126,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                       value={svcHighlights}
                       onChange={(e) => setSvcHighlights(e.target.value)}
                       placeholder="Багийн OVR өсгөх, Тактик тохиргоо, Зөвлөгөө"
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white focus:outline-none focus:border-[#38BDF8]"
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-[#070102] border border-white/15 text-sm text-white focus:outline-none focus:border-[#EF4444]"
                     />
                   </div>
 
@@ -1141,7 +1141,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                     <button
                       type="submit"
                       disabled={savingService}
-                      className="px-5 py-2 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs font-semibold cursor-pointer disabled:opacity-60"
+                      className="px-5 py-2 rounded-full bg-[#DC2626] hover:bg-[#EF4444] text-white text-xs font-semibold cursor-pointer disabled:opacity-60"
                     >
                       {savingService ? 'Хадгалж байна...' : 'Хадгалах'}
                     </button>
@@ -1151,14 +1151,14 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
 
               {/* Services List */}
               {firestoreServices.length === 0 ? (
-                <div className="bg-[#051B36] border border-white/10 rounded-xl p-6 space-y-4">
+                <div className="bg-[#140407] border border-white/10 rounded-xl p-6 space-y-4">
                   <p className="text-sm text-[#CBD5E1]">
                     Одоогоор Firestore `services` цуглуулга хоосон байгаа тул сайт дээр кодонд хадгалсан үндсэн 2 үйлчилгээ харагдаж байна. Дээрх товчоор Firestore руу хуулж засах боломжтой.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {SERVICES.map((svc) => (
-                      <div key={svc.id} className="p-4 rounded-lg bg-[#021327] border border-white/10">
-                        <p className="text-xs font-mono-code text-[#38BDF8] mb-1">
+                      <div key={svc.id} className="p-4 rounded-lg bg-[#070102] border border-white/10">
+                        <p className="text-xs font-mono-code text-[#EF4444] mb-1">
                           {svc.index} · {svc.category}
                         </p>
                         <h3 className="font-display text-xl font-bold uppercase text-white mb-1">
@@ -1175,11 +1175,11 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                   {firestoreServices.map((svc) => (
                     <div
                       key={svc.id}
-                      className="bg-[#051B36] border border-white/10 rounded-xl p-6 flex flex-col justify-between gap-4"
+                      className="bg-[#140407] border border-white/10 rounded-xl p-6 flex flex-col justify-between gap-4"
                     >
                       <div>
                         <div className="flex items-center justify-between gap-3 mb-2">
-                          <span className="text-xs font-mono-code text-[#38BDF8] tabular-nums">
+                          <span className="text-xs font-mono-code text-[#EF4444] tabular-nums">
                             {svc.index} · {svc.category}
                           </span>
                           <span className="text-xs font-semibold text-[#CBD5E1] tabular-nums">
@@ -1201,7 +1201,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                         <button
                           type="button"
                           onClick={() => handleEditService(svc)}
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#38BDF8] text-xs font-semibold text-white hover:text-[#021327] transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#DC2626] text-xs font-semibold text-white transition-colors cursor-pointer"
                         >
                           <Pencil className="w-3.5 h-3.5" />
                           <span>Засах</span>
@@ -1227,7 +1227,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
             <div className="space-y-6">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#38BDF8] mb-1">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#EF4444] mb-1">
                     Firestore · Холбоо барих ба Зочны дэвтэр
                   </p>
                   <h1 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-white">
@@ -1236,13 +1236,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">
-                  <div className="inline-flex items-center gap-1 p-1 bg-[#051B36] border border-white/10 rounded-lg">
+                  <div className="inline-flex items-center gap-1 p-1 bg-[#140407] border border-white/10 rounded-lg">
                     <button
                       type="button"
                       onClick={() => setContactSubTab('inquiries')}
                       className={`px-3.5 py-1.5 rounded-md text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                         contactSubTab === 'inquiries'
-                          ? 'bg-[#38BDF8] text-[#021327]'
+                          ? 'bg-[#DC2626] text-white'
                           : 'text-[#CBD5E1] hover:text-white'
                       }`}
                     >
@@ -1253,7 +1253,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                       onClick={() => setContactSubTab('guestbook')}
                       className={`px-3.5 py-1.5 rounded-md text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                         contactSubTab === 'guestbook'
-                          ? 'bg-[#38BDF8] text-[#021327]'
+                          ? 'bg-[#DC2626] text-white'
                           : 'text-[#CBD5E1] hover:text-white'
                       }`}
                     >
@@ -1269,7 +1269,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                         value={contactSearch}
                         onChange={(e) => setContactSearch(e.target.value)}
                         placeholder="Нэр, утас, имэйл хайх..."
-                        className="pl-9 pr-4 py-2 rounded-lg bg-[#051B36] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8]"
+                        className="pl-9 pr-4 py-2 rounded-lg bg-[#140407] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444]"
                       />
                     </div>
                   )}
@@ -1277,7 +1277,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
               </div>
 
               {contactSubTab === 'inquiries' ? (
-                <div className="bg-[#051B36] border border-white/10 rounded-xl overflow-hidden">
+                <div className="bg-[#140407] border border-white/10 rounded-xl overflow-hidden">
                   {loadingData ? (
                     <div className="p-8 text-sm text-[#94A3B8]">Ачааллаж байна...</div>
                   ) : filteredInquiries.length === 0 ? (
@@ -1295,7 +1295,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                             <div className="flex flex-wrap items-center gap-2 text-xs text-[#94A3B8]">
                               <span className="text-sm font-bold text-white">{item.name}</span>
                               <span aria-hidden="true">·</span>
-                              <span className="font-semibold text-[#38BDF8]">{item.contact}</span>
+                              <span className="font-semibold text-[#EF4444]">{item.contact}</span>
                               <span aria-hidden="true">·</span>
                               <span className="tabular-nums">{formatDateTime(item.createdAt)}</span>
                               <span aria-hidden="true">·</span>
@@ -1304,7 +1304,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                                   item.status === 'completed'
                                     ? 'text-emerald-400'
                                     : item.status === 'contacted'
-                                    ? 'text-[#38BDF8]'
+                                    ? 'text-[#EF4444]'
                                     : 'text-amber-300'
                                 }`}
                               >
@@ -1322,7 +1322,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                               <button
                                 type="button"
                                 onClick={() => handleUpdateOrderStatus(item.id, 'contacted')}
-                                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/10 hover:bg-[#38BDF8] text-xs font-semibold text-white hover:text-[#021327] transition-colors cursor-pointer"
+                                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/10 hover:bg-[#DC2626] text-xs font-semibold text-white transition-colors cursor-pointer"
                               >
                                 <Clock className="w-3.5 h-3.5" aria-hidden="true" />
                                 <span>Холбогдсон</span>
@@ -1332,7 +1332,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                               <button
                                 type="button"
                                 onClick={() => handleUpdateOrderStatus(item.id, 'completed')}
-                                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#38BDF8] hover:bg-emerald-400 text-xs font-semibold text-[#021327] transition-colors cursor-pointer"
+                                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#DC2626] hover:bg-emerald-600 text-xs font-semibold text-white transition-colors cursor-pointer"
                               >
                                 <Check className="w-3.5 h-3.5" aria-hidden="true" />
                                 <span>Дуусгах</span>
@@ -1353,7 +1353,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                   )}
                 </div>
               ) : (
-                <div className="bg-[#051B36] border border-white/10 rounded-xl overflow-hidden">
+                <div className="bg-[#140407] border border-white/10 rounded-xl overflow-hidden">
                   {guestbookMessages.length === 0 ? (
                     <div className="p-8 text-center text-sm text-[#94A3B8]">
                       Зочны дэвтэрт сэтгэгдэл алга байна.
@@ -1371,7 +1371,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onExitAdmin }) => {
                               {msg.location && (
                                 <>
                                   <span aria-hidden="true">·</span>
-                                  <span className="text-[#38BDF8]">{msg.location}</span>
+                                  <span className="text-[#EF4444]">{msg.location}</span>
                                 </>
                               )}
                               <span aria-hidden="true">·</span>

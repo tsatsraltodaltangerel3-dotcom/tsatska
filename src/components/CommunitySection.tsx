@@ -329,30 +329,30 @@ export const CommunitySection: React.FC = () => {
   };
 
   return (
-    <section id="community" className="py-20 lg:py-28 bg-[#021327] text-white border-t border-white/10">
+    <section id="community" className="py-20 lg:py-28 bg-[#070102] bg-[radial-gradient(ellipse_at_top_left,_rgba(127,29,29,0.25)_0%,_rgba(7,1,2,1)_70%)] text-white border-t border-red-500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-10 mb-12 border-b border-white/12">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-10 mb-12 border-b border-red-500/20">
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#38BDF8] mb-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#EF4444] mb-2">
               Firebase Cloud Firestore · Бодит цагийн холболт
             </p>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white [text-wrap:balance]">
-              ДЭМЖИГЧИД БА <span className="text-[#38BDF8]">БЭЛТГЭЛ</span>
+              ДЭМЖИГЧИД БА <span className="text-[#EF4444]">БЭЛТГЭЛ</span>
             </h2>
           </div>
 
           {/* Google Auth Control */}
           <div className="flex flex-wrap items-center gap-3">
             {user ? (
-              <div className="flex items-center gap-3 bg-[#051B36] border border-white/15 rounded-full pl-4 pr-2 py-1.5">
+              <div className="flex items-center gap-3 bg-[#140407] border border-red-500/25 rounded-full pl-4 pr-2 py-1.5">
                 <span className="text-xs sm:text-sm font-medium text-white truncate max-w-[180px]">
                   {user.displayName || user.email}
                 </span>
                 <button
                   type="button"
                   onClick={logOut}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-[#38BDF8] text-xs font-semibold text-white hover:text-[#021327] transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-[#DC2626] text-xs font-semibold text-white transition-colors cursor-pointer"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span>Гарах</span>
@@ -362,7 +362,7 @@ export const CommunitySection: React.FC = () => {
               <button
                 type="button"
                 onClick={signInWithGoogle}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#DC2626] hover:bg-[#EF4444] text-white text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
               >
                 <LogIn className="w-4 h-4" />
                 <span>Google-ээр нэвтрэх</span>
@@ -384,10 +384,10 @@ export const CommunitySection: React.FC = () => {
           {/* Left Column: Supporter Cheer Counter & Live Training Logs */}
           <div className="lg:col-span-5 space-y-6">
             {/* Cheer Counter Card */}
-            <div className="bg-[#051B36] border border-white/10 rounded-xl p-6 sm:p-8">
+            <div className="bg-[#140407] border border-red-500/20 rounded-xl p-6 sm:p-8">
               <div className="flex items-center justify-between gap-4 mb-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-[#38BDF8] mb-1">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#EF4444] mb-1">
                     Шууд дэмжлэг
                   </p>
                   <div className="font-display text-4xl sm:text-5xl font-bold text-white tabular-nums">
@@ -401,8 +401,8 @@ export const CommunitySection: React.FC = () => {
                   onClick={handleToggleCheer}
                   className={`inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
                     hasCheered
-                      ? 'bg-[#38BDF8] text-[#021327]'
-                      : 'bg-white/10 hover:bg-[#38BDF8] text-white hover:text-[#021327] border border-white/20'
+                      ? 'bg-[#DC2626] text-white'
+                      : 'bg-white/10 hover:bg-[#DC2626] text-white border border-red-500/25'
                   }`}
                 >
                   <Heart className={`w-4 h-4 ${hasCheered ? 'fill-current' : ''}`} />
@@ -415,10 +415,10 @@ export const CommunitySection: React.FC = () => {
             </div>
 
             {/* Training Logs Card */}
-            <div className="bg-[#051B36] border border-white/10 rounded-xl p-6 sm:p-8">
+            <div className="bg-[#140407] border border-red-500/20 rounded-xl p-6 sm:p-8">
               <div className="flex items-center justify-between mb-5">
                 <h3 className="font-display text-2xl font-bold uppercase tracking-tight text-white">
-                  БЭЛТГЭЛИЙН <span className="text-[#38BDF8]">ТЭМДЭГЛЭЛ</span>
+                  БЭЛТГЭЛИЙН <span className="text-[#EF4444]">ТЭМДЭГЛЭЛ</span>
                 </h3>
                 <span className="font-mono-code text-xs text-[#94A3B8] tabular-nums">
                   {trainingLogs.length} бичлэг
@@ -426,7 +426,7 @@ export const CommunitySection: React.FC = () => {
               </div>
 
               {isAdmin && (
-                <form onSubmit={handleCreateTrainingLog} className="mb-6 pb-6 border-b border-white/10 space-y-3">
+                <form onSubmit={handleCreateTrainingLog} className="mb-6 pb-6 border-b border-red-500/15 space-y-3">
                   <input
                     type="text"
                     required
@@ -434,7 +434,7 @@ export const CommunitySection: React.FC = () => {
                     value={logTitle}
                     onChange={(e) => setLogTitle(e.target.value)}
                     placeholder="Бэлтгэлийн нэр (ж.нь: Хурд ба пассын дасгал)"
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8]"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-[#070102] border border-red-500/20 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444]"
                   />
                   <div className="grid grid-cols-3 gap-2.5">
                     <input
@@ -444,7 +444,7 @@ export const CommunitySection: React.FC = () => {
                       value={logFocus}
                       onChange={(e) => setLogFocus(e.target.value)}
                       placeholder="Чиглэл (Техник)"
-                      className="col-span-2 px-3.5 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8]"
+                      className="col-span-2 px-3.5 py-2.5 rounded-lg bg-[#070102] border border-red-500/20 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444]"
                     />
                     <input
                       type="number"
@@ -454,13 +454,13 @@ export const CommunitySection: React.FC = () => {
                       value={logDuration}
                       onChange={(e) => setLogDuration(e.target.value)}
                       placeholder="Минут"
-                      className="px-3 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white tabular-nums focus:outline-none focus:border-[#38BDF8]"
+                      className="px-3 py-2.5 rounded-lg bg-[#070102] border border-red-500/20 text-sm text-white tabular-nums focus:outline-none focus:border-[#EF4444]"
                     />
                   </div>
                   <button
                     type="submit"
                     disabled={submittingLog}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs font-semibold cursor-pointer transition-colors"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#DC2626] hover:bg-[#EF4444] text-white text-xs font-semibold cursor-pointer transition-colors"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>{submittingLog ? 'Хадгалж байна...' : 'Бэлтгэл нэмэх'}</span>
@@ -475,14 +475,14 @@ export const CommunitySection: React.FC = () => {
                   Одоогоор нэмэгдсэн бэлтгэлийн тэмдэглэл байхгүй байна.
                 </p>
               ) : (
-                <div className="divide-y divide-white/10">
+                <div className="divide-y divide-red-500/15">
                   {trainingLogs.map((log) => (
                     <div key={log.id} className="py-3.5 first:pt-0 last:pb-0 flex items-center justify-between gap-3">
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-white truncate">{log.title}</p>
                         <p className="text-xs text-[#94A3B8] tabular-nums">
                           {log.focusArea} · {log.durationMinutes} мин ·{' '}
-                          <span className={log.status === 'completed' ? 'text-[#38BDF8]' : 'text-[#CBD5E1]'}>
+                          <span className={log.status === 'completed' ? 'text-[#EF4444]' : 'text-[#CBD5E1]'}>
                             {log.status === 'completed' ? 'Дууссан' : 'Төлөвлөсөн'}
                           </span>
                         </p>
@@ -492,7 +492,7 @@ export const CommunitySection: React.FC = () => {
                           type="button"
                           onClick={() => handleCompleteTrainingLog(log.id)}
                           aria-label="Бэлтгэлийг дууссан болгох"
-                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/10 hover:bg-[#38BDF8] text-xs font-semibold text-white hover:text-[#021327] transition-colors cursor-pointer shrink-0"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/10 hover:bg-[#DC2626] text-xs font-semibold text-white transition-colors cursor-pointer shrink-0"
                         >
                           <Check className="w-3.5 h-3.5" />
                           <span>Дуусгах</span>
@@ -506,10 +506,10 @@ export const CommunitySection: React.FC = () => {
           </div>
 
           {/* Right Column: Real-Time Supporter Guestbook */}
-          <div className="lg:col-span-7 bg-[#051B36] border border-white/10 rounded-xl p-6 sm:p-8">
-            <div className="flex items-center justify-between gap-4 pb-5 mb-6 border-b border-white/10">
+          <div className="lg:col-span-7 bg-[#140407] border border-red-500/20 rounded-xl p-6 sm:p-8">
+            <div className="flex items-center justify-between gap-4 pb-5 mb-6 border-b border-red-500/15">
               <div className="flex items-center gap-2.5">
-                <MessageSquare className="w-5 h-5 text-[#38BDF8]" aria-hidden="true" />
+                <MessageSquare className="w-5 h-5 text-[#EF4444]" aria-hidden="true" />
                 <h3 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white">
                   ЗОЧНЫ ДЭВТЭР
                 </h3>
@@ -528,7 +528,7 @@ export const CommunitySection: React.FC = () => {
                   value={locationInput}
                   onChange={(e) => setLocationInput(e.target.value)}
                   placeholder="Хот эсвэл клуб (заавал биш)"
-                  className="px-4 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8]"
+                  className="px-4 py-2.5 rounded-lg bg-[#070102] border border-red-500/20 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444]"
                 />
                 <input
                   type="text"
@@ -541,7 +541,7 @@ export const CommunitySection: React.FC = () => {
                       ? 'Урам зоригийн сэтгэгдлээ бичнэ үү...'
                       : 'Сэтгэгдэл бичихийн тулд Google-ээр нэвтэрнэ үү...'
                   }
-                  className="sm:col-span-2 px-4 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8]"
+                  className="sm:col-span-2 px-4 py-2.5 rounded-lg bg-[#070102] border border-red-500/20 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444]"
                 />
               </div>
 
@@ -555,7 +555,7 @@ export const CommunitySection: React.FC = () => {
                   <button
                     type="submit"
                     disabled={submittingMessage}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#DC2626] hover:bg-[#EF4444] text-white text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
                   >
                     <span>
                       {submittingMessage ? 'Илгээж байна...' : 'Сэтгэгдэл үлдээх'}
@@ -565,7 +565,7 @@ export const CommunitySection: React.FC = () => {
                   <button
                     type="button"
                     onClick={signInWithGoogle}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#021327] text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#DC2626] hover:bg-[#EF4444] text-white text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0"
                   >
                     <span>Google-ээр нэвтрэх</span>
                   </button>
@@ -577,13 +577,13 @@ export const CommunitySection: React.FC = () => {
             {loading ? (
               <p className="text-sm text-[#94A3B8]">Сэтгэгдлүүдийг ачааллаж байна...</p>
             ) : messages.length === 0 ? (
-              <div className="py-10 text-center border border-dashed border-white/15 rounded-lg">
+              <div className="py-10 text-center border border-dashed border-red-500/25 rounded-lg">
                 <p className="text-sm text-[#CBD5E1]">
                   Анхны дэмжлэгийн сэтгэгдлийг үлдээнэ үү.
                 </p>
               </div>
             ) : (
-              <div className="divide-y divide-white/10">
+              <div className="divide-y divide-red-500/15">
                 {messages.map((item) => {
                   const canDelete = Boolean(
                     user && (isAdmin || user.uid === item.authorId)
@@ -598,7 +598,7 @@ export const CommunitySection: React.FC = () => {
                           {item.location && (
                             <>
                               <span aria-hidden="true">·</span>
-                              <span className="text-[#38BDF8]">{item.location}</span>
+                              <span className="text-[#EF4444]">{item.location}</span>
                             </>
                           )}
                           <span aria-hidden="true">·</span>

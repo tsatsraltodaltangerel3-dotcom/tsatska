@@ -57,8 +57,8 @@ export const PERSONAL_INFO = {
   bioParagraph2:
     "Би багаасаа хөл бөмбөг тоглох дуртай бөгөөд өдөр бүр бэлтгэл сургуулилт хийж өөрийгөө тасралтгүй хөгжүүлдэг. Мөн аялалд явах, вэб технологи суралцах чин хүсэл эрмэлзэлтэй.",
   heroImage: heroFootballImg,
-  heroVideo: "https://video.wixstatic.com/video/827c6d_d388bdd325ab4451994e69b59f3a9185/1080p/mp4/file.mp4",
-  heroVideoFallback: "/videos/football-hero.webm",
+  heroVideo: "/assets/aistudio/SaveInta.com_AQMAw9jblVJiymNHnLdguVFMmQFU-sQgzplKYC6kEBDL3gvOuXhpBiJbkcW5Jb9zRh4sPhb7t1dt89RlU1HpDmjz_f4a453dc.mp4",
+  heroVideoFallback: "/assets/aistudio/SaveInta.com_AQMAw9jblVJiymNHnLdguVFMmQFU-sQgzplKYC6kEBDL3gvOuXhpBiJbkcW5Jb9zRh4sPhb7t1dt89RlU1HpDmjz_f4a453dc.mp4",
   stadiumPitch: dreamStadiumImg,
   studioImage: youtubeStudioImg,
   netlifyBase: "https://graceful-meringue-2b7911.netlify.app/",
@@ -193,7 +193,7 @@ export const SERVICES: ServiceItem[] = [
     name: "FC Mobile тоглоом хөгжүүлэх",
     description:
       "FC Mobile багийн OVR өсгөх, тактик ба байрлалын оновчтой тохиргоо хийх, Division Rivals зэрэглэл ахиулах болон тоглоомын ур чадварын зөвлөгөө.",
-    phone: "+976 9911-2233",
+    phone: "+976 9508-5672",
     highlights: ["Багийн OVR хөгжүүлэлт", "Тактик тохиргоо", "Тоглолтын зөвлөгөө"],
   },
   {
@@ -203,7 +203,133 @@ export const SERVICES: ServiceItem[] = [
     name: "Хөл бөмбөгийн талаар мэдээлэл өгөх",
     description:
       "Олон улсын болон дотоодын хөл бөмбөгийн лигийн мэдээлэл, тоглолтын задлан шинжилгээ, бэлтгэлийн үндсэн техник ба анхан шатны чиглүүлэг.",
-    phone: "+976 8811-4455",
+    phone: "+976 9508-5672",
     highlights: ["Тоглолтын шинжилгээ", "Бэлтгэлийн чиглүүлэг", "Лигийн мэдээлэл"],
+  },
+];
+
+export interface FootballInfoItem {
+  id: string;
+  index: string;
+  category: string;
+  subtitle: string;
+  title: string;
+  description: string;
+  fullDetails: string[];
+  image: string;
+  highlights: string[];
+  sourceLabel: string;
+  url?: string;
+  hasTop5Archive?: boolean;
+}
+
+export interface Top5LeagueSeason {
+  season: string;
+  premierLeague: string;
+  laLiga: string;
+  serieA: string;
+  bundesliga: string;
+  ligue1: string;
+}
+
+export const TOP5_LEAGUES_2000_2026: Top5LeagueSeason[] = [
+  { season: "2025–26", premierLeague: "Arsenal", laLiga: "Barcelona", serieA: "Inter Milan", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2024–25", premierLeague: "Liverpool", laLiga: "Barcelona", serieA: "Napoli", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2023–24", premierLeague: "Manchester City", laLiga: "Real Madrid", serieA: "Inter Milan", bundesliga: "Bayer Leverkusen", ligue1: "Paris Saint-Germain" },
+  { season: "2022–23", premierLeague: "Manchester City", laLiga: "Barcelona", serieA: "Napoli", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2021–22", premierLeague: "Manchester City", laLiga: "Real Madrid", serieA: "AC Milan", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2020–21", premierLeague: "Manchester City", laLiga: "Atlético Madrid", serieA: "Inter Milan", bundesliga: "Bayern Munich", ligue1: "Lille" },
+  { season: "2019–20", premierLeague: "Liverpool", laLiga: "Real Madrid", serieA: "Juventus", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2018–19", premierLeague: "Manchester City", laLiga: "Barcelona", serieA: "Juventus", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2017–18", premierLeague: "Manchester City", laLiga: "Barcelona", serieA: "Juventus", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2016–17", premierLeague: "Chelsea", laLiga: "Real Madrid", serieA: "Juventus", bundesliga: "Bayern Munich", ligue1: "AS Monaco" },
+  { season: "2015–16", premierLeague: "Leicester City", laLiga: "Barcelona", serieA: "Juventus", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2014–15", premierLeague: "Chelsea", laLiga: "Barcelona", serieA: "Juventus", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2013–14", premierLeague: "Manchester City", laLiga: "Atlético Madrid", serieA: "Juventus", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2012–13", premierLeague: "Manchester United", laLiga: "Barcelona", serieA: "Juventus", bundesliga: "Bayern Munich", ligue1: "Paris Saint-Germain" },
+  { season: "2011–12", premierLeague: "Manchester City", laLiga: "Real Madrid", serieA: "Juventus", bundesliga: "Borussia Dortmund", ligue1: "Montpellier" },
+  { season: "2010–11", premierLeague: "Manchester United", laLiga: "Barcelona", serieA: "AC Milan", bundesliga: "Borussia Dortmund", ligue1: "Lille" },
+  { season: "2009–10", premierLeague: "Chelsea", laLiga: "Barcelona", serieA: "Inter Milan", bundesliga: "Bayern Munich", ligue1: "Marseille" },
+  { season: "2008–09", premierLeague: "Manchester United", laLiga: "Barcelona", serieA: "Inter Milan", bundesliga: "VfL Wolfsburg", ligue1: "Bordeaux" },
+  { season: "2007–08", premierLeague: "Manchester United", laLiga: "Real Madrid", serieA: "Inter Milan", bundesliga: "Bayern Munich", ligue1: "Lyon" },
+  { season: "2006–07", premierLeague: "Manchester United", laLiga: "Real Madrid", serieA: "Inter Milan", bundesliga: "VfB Stuttgart", ligue1: "Lyon" },
+  { season: "2005–06", premierLeague: "Chelsea", laLiga: "Barcelona", serieA: "Inter Milan*", bundesliga: "Bayern Munich", ligue1: "Lyon" },
+  { season: "2004–05", premierLeague: "Chelsea", laLiga: "Barcelona", serieA: "Олгогдоогүй*", bundesliga: "Bayern Munich", ligue1: "Lyon" },
+  { season: "2003–04", premierLeague: "Arsenal", laLiga: "Valencia", serieA: "AC Milan", bundesliga: "Werder Bremen", ligue1: "Lyon" },
+  { season: "2002–03", premierLeague: "Manchester United", laLiga: "Real Madrid", serieA: "Juventus", bundesliga: "Bayern Munich", ligue1: "Lyon" },
+  { season: "2001–02", premierLeague: "Arsenal", laLiga: "Valencia", serieA: "Juventus", bundesliga: "Borussia Dortmund", ligue1: "Lyon" },
+  { season: "2000–01", premierLeague: "Manchester United", laLiga: "Real Madrid", serieA: "AS Roma", bundesliga: "Bayern Munich", ligue1: "Nantes" },
+  { season: "1999–00", premierLeague: "Manchester United", laLiga: "Deportivo La Coruña", serieA: "Lazio", bundesliga: "Bayern Munich", ligue1: "AS Monaco" },
+];
+
+export const FOOTBALL_INFO_ITEMS: FootballInfoItem[] = [
+  {
+    id: "fb-info-ucl",
+    index: "01",
+    category: "Лигийн тойм",
+    subtitle: "2000–2026 оны бүрэн архив",
+    title: "Аваргуудын Лиг ба Топ 5 Лиг",
+    description:
+      "2000 оноос 2026 он хүртэлх Европын Топ 5 лигийн (Premier League, La Liga, Serie A, Bundesliga, Ligue 1) бүх улирлын аваргууд болон онцлох мэдээлэл.",
+    fullDetails: [
+      "Английн Premier League, Испанийн La Liga, Италийн Serie A, Германы Bundesliga болон Францын Ligue 1 нь дэлхийн хамгийн өндөр түвшний Топ 5 хөл бөмбөгийн лиг юм.",
+      "2000–2026 оны хооронд Bayern Munich (20 түрүү), Barcelona (13 түрүү), PSG (12 түрүү), Juventus (11 түрүү), Manchester City болон Manchester United (тус бүр 8 түрүү) лигүүддээ тэргүүлсэн.",
+    ],
+    image: dreamStadiumImg,
+    highlights: ["2000–2026 аваргууд", "Premier League", "La Liga · Serie A", "Bundesliga · Ligue 1"],
+    sourceLabel: "Топ 5 Лиг · 2000–2026",
+    hasTop5Archive: true,
+  },
+  {
+    id: "fb-info-tactics",
+    index: "02",
+    category: "Тактик шинжилгээ",
+    subtitle: "4-3-3 & 4-2-3-1 систем",
+    title: "Тактикийн мэдээлэл",
+    description:
+      "Бөмбөг эзэмшилт, өндөр прессинг болон хурдан сөрөг довтолгооны үед хагас хамгаалагч, жигүүрийн довтлогчдын гүйцэтгэх үүрэг.",
+    fullDetails: [
+      "4-3-3 систем нь талбайн төвд гурвалжин үүсгэж богино дамжуулалтаар довтолгоо эхлүүлэх, мөн жигүүрээр хурдан нэвтрэх өндөр боломж олгодог.",
+      "Өндөр прессинг (High Press) хийх үед довтлогч болон хагас хамгаалагчид өрсөлдөгчийн хамгаалалтаас гарах дамжуулалтын шугамыг зэрэг хааж, бөмбөгийг эрт булаан авдаг.",
+      "Талбайн байрлалаа зөв эзлэх, бөмбөггүй үеийн шилжилт хөдөлгөөнийг цаг алдалгүй хийх нь орчин үеийн тамирчны хамгийн чухал ур чадвар юм.",
+    ],
+    image: heroFootballImg,
+    highlights: ["4-3-3 схем", "Өндөр прессинг", "Талбайн алсын хараа", "Сөрөг довтолгоо"],
+    sourceLabel: "instagram.com/teactics",
+    url: "https://www.instagram.com/teactics?utm_source=ig_web_button_share_sheet&avpt=ZDNlZDc0MzIxNw==",
+  },
+  {
+    id: "fb-info-training",
+    index: "03",
+    category: "Бэлтгэлийн үндэс",
+    subtitle: "Техник ба биеийн хүч",
+    title: "Өдөр тутмын бэлтгэлийн аргачлал",
+    description:
+      "Бөмбөг залгалт, нарийвчлалтай дамжуулалт, цохилтын техник болон 90 минутын тоглолтын тэсвэрийг хөгжүүлэх үндсэн дасгалууд.",
+    fullDetails: [
+      "Эхний хүрэлт (First Touch) болон хоёр хөлөөр жигд дамжуулалт өгөх дасгалыг өдөр бүр 20-30 минут хийх нь тоглолтын хурдыг мэдэгдэхүйц нэмэгдүүлдэг.",
+      "Хурд ба тэсрэлтийн интервал гүйлт, тэнцвэр болон үе мөчний уян хатан байдлын дасгал нь бэртлээс сэргийлж, талбай дээрх хөдөлгөөнийг хөнгөн болгоно.",
+      "Бэлтгэлийн дараах зөв сунгалт, усны тэнцвэр болон хангалттай амралт (8+ цаг нойр) нь булчингийн нөхөн сэргэлтийн гол түлхүүр юм.",
+    ],
+    image: workPortfolioImg,
+    highlights: ["Эхний хүрэлт", "Хурдны интервал", "Хоёр хөлийн техник", "Сэргэлт"],
+    sourceLabel: "Training & Fitness",
+  },
+  {
+    id: "fb-info-world",
+    index: "04",
+    category: "Дэлхийн хөл бөмбөг",
+    subtitle: "Залуу одод ба статистик",
+    title: "Шинэ үеийн тамирчид ба тоглолт",
+    description:
+      "Олон улсын шигшээ багуудын тэмцээн, залуу авьяаслаг тамирчдын амжилтын замнал болон хөл бөмбөгийн сонирхолтой статистик.",
+    fullDetails: [
+      "Өнөөдрийн дэлхийн хөл бөмбөгт 17-21 насны залуу тамирчид топ лигүүд болон шигшээ багийн гарааны бүрэлдэхүүнд гол үүрэг гүйцэтгэж байна.",
+      "Тоглолтын статистик үзүүлэлтүүд (xG — хүлээгдэж буй гоол, дамжуулалтын нарийвчлал, спринтийн тоо) нь тамирчны бодит үр дүнг нарийн хэмжих стандарт болсон.",
+      "Мөн eFootball болон FC Mobile зэрэг спортын симуляци тоглоомууд нь залуу тоглогчдод тактик, байрлалын мэдрэмжээ хөгжүүлэх сонирхолтой орчин болж өгдөг.",
+    ],
+    image: youtubeStudioImg,
+    highlights: ["Залуу авьяасууд", "xG статистик", "Шигшээ багууд", "eFootball & FC Mobile"],
+    sourceLabel: "Global Football",
   },
 ];

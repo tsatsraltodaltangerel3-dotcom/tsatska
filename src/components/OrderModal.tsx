@@ -132,13 +132,13 @@ export const OrderModal: React.FC<OrderModalProps> = ({
           onClose();
         }
       }}
-      className="fixed inset-0 z-50 bg-[#021327]/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+      className="fixed inset-0 z-50 bg-[#070102]/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
     >
-      <div className="relative w-full max-w-lg bg-[#051B36] border border-white/15 rounded-2xl p-6 sm:p-8 text-white shadow-2xl">
+      <div className="relative w-full max-w-lg bg-[#140407] border border-red-500/25 rounded-2xl p-6 sm:p-8 text-white shadow-2xl">
         {/* Header */}
-        <div className="flex items-start justify-between gap-4 pb-5 mb-6 border-b border-white/10">
+        <div className="flex items-start justify-between gap-4 pb-5 mb-6 border-b border-red-500/20">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#38BDF8] mb-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#EF4444] mb-1">
               Шууд холбогдох · Захиалга
             </p>
             <h2
@@ -188,7 +188,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
               htmlFor="order-name"
               className="block text-xs font-semibold uppercase tracking-wider text-[#CBD5E1] mb-1.5"
             >
-              Нэр <span className="text-[#38BDF8]">*</span>
+              Нэр <span className="text-[#EF4444]">*</span>
             </label>
             <input
               id="order-name"
@@ -199,7 +199,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Таны нэр"
-              className="w-full px-4 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8]"
+              className="w-full px-4 py-2.5 rounded-lg bg-[#070102] border border-red-500/20 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444]"
             />
           </div>
 
@@ -208,7 +208,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
               htmlFor="order-contact"
               className="block text-xs font-semibold uppercase tracking-wider text-[#CBD5E1] mb-1.5"
             >
-              Утас эсвэл имэйл <span className="text-[#38BDF8]">*</span>
+              Утас эсвэл имэйл <span className="text-[#EF4444]">*</span>
             </label>
             <input
               id="order-contact"
@@ -219,7 +219,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
               value={contact}
               onChange={(e) => setContact(e.target.value)}
               placeholder="Жишээ: 99112233 эсвэл name@email.com"
-              className="w-full px-4 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8]"
+              className="w-full px-4 py-2.5 rounded-lg bg-[#070102] border border-red-500/20 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444]"
             />
           </div>
 
@@ -239,7 +239,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
               value={service}
               onChange={(e) => setService(e.target.value)}
               placeholder="Сонгосон үйлчилгээ (заавал биш)"
-              className="w-full px-4 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8]"
+              className="w-full px-4 py-2.5 rounded-lg bg-[#070102] border border-red-500/20 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444]"
             />
             <datalist id="portfolio-services-list">
               {SERVICES.map((item) => (
@@ -263,7 +263,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Танд хэрэгтэй мэдээлэл эсвэл хүсэлтээ бичнэ үү..."
-              className="w-full px-4 py-2.5 rounded-lg bg-[#021327] border border-white/15 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#38BDF8] resize-none"
+              className="w-full px-4 py-2.5 rounded-lg bg-[#070102] border border-red-500/20 text-sm text-white placeholder:text-[#64748B] focus:outline-none focus:border-[#EF4444] resize-none"
             />
           </div>
 
@@ -279,7 +279,7 @@ export const OrderModal: React.FC<OrderModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#38BDF8] hover:bg-[#7DD3FC] disabled:opacity-60 disabled:cursor-not-allowed text-[#021327] text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#DC2626] hover:bg-[#EF4444] disabled:opacity-60 disabled:cursor-not-allowed text-white text-xs sm:text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap"
             >
               <Send className="w-4 h-4" aria-hidden="true" />
               <span>{isSubmitting ? 'Илгээж байна...' : 'Илгээх'}</span>

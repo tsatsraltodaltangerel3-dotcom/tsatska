@@ -1,23 +1,210 @@
 /**
- * Web Audio API-д суурилсан бороо ба тайвшруулах хөгжмийн симулятор.
- * Гадны найдвартай бус аудио файл шаардахгүйгээр цэвэр хөгжим тоглоно.
+ * YouTube IFrame Player API-д суурилсан дууны дахилт тоглуулагч.
+ * Дуу: John Newman - Love Me Again (https://youtu.be/CfihYWRWRTQ)
+ * Дахилт хэсэг: 0:49 - 1:25 (49с - 85с) давталттай тоглоно.
  */
 
-class AmbientAudioManager {
-  private ctx: AudioContext | null = null;
-  private noiseNode: AudioNode | null = null;
-  private droneOsc1: OscillatorNode | null = null;
-  private droneOsc2: OscillatorNode | null = null;
-  private masterGain: GainNode | null = null;
-  private isAudioPlaying = false;
+const YOUTUBE_VIDEO_ID = 'CfihYWRWRTQ';
+const CHORUS_START_SECONDS = 49;
+const CHORUS_END_SECONDS = 85;
+const CONTAINER_ID = 'yt-chorus-ambient-player';
 
-  private initContext() {
-    if (!this.ctx) {
-      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      this.ctx = new AudioContextClass();
+interface YTPlayerOptions {
+  height?: string | number;
+  width?: string | number;
+  videoId: string;
+  playerVars?: Record<string, string | number>;
+  events?: {
+    onReady?: (event: { target: YTPlayerInstance }) => void;
+    onStateChange?: (event: { data: number; target: YTPlayerInstance }) => void;
+    onError?: () => void;
+  };
+}
+
+interface YTPlayerInstance {
+  playVideo: () => void;
+  pauseVideo: () => void;
+  seekTo: (seconds: number, allowSeekAhead: boolean) => void;
+  getCurrentTime: () => number;
+  setVolume: (volume: number) => void;
+  unMute: () => void;
+  destroy: () => void;
+}
+
+interface YTNamespace {
+  Player: new (elementId: string, options: YTPlayerOptions) => YTPlayerInstance;
+  PlayerState?: {
+    ENDED: number;
+    PLAYING: number;
+    PAUSED: number;
+    BUFFERING: number;
+    CUED: number;
+  };
+}
+
+declare global {
+  interface Window {
+    YT?: YTNamespace;
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+type PlaybackListener = (playing: boolean) => void;
+
+class AmbientAudioManager {
+  private player: YTPlayerInstance | null = null;
+  private isPlayerReady = false;
+  private isInitializing = false;
+  private isAudioPlaying = false;
+  private pendingPlay = false;
+  private loopTimer: number | null = null;
+  private listeners = new Set<PlaybackListener>();
+
+  public subscribe(listener: PlaybackListener): () => void {
+    this.listeners.add(listener);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  private notify() {
+    this.listeners.forEach((listener) => listener(this.isAudioPlaying));
+  }
+
+  public preload() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    if (this.player || this.isInitializing) return;
+
+    this.isInitializing = true;
+    this.ensureContainer();
+
+    if (window.YT && typeof window.YT.Player === 'function') {
+      this.createPlayer();
+      return;
     }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
+
+    const previousReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      if (typeof previousReady === 'function') {
+        previousReady();
+      }
+      this.createPlayer();
+    };
+
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      'script[src="https://www.youtube.com/iframe_api"]'
+    );
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }
+
+  private ensureContainer() {
+    let container = document.getElementById(CONTAINER_ID);
+    if (!container) {
+      container = document.createElement('div');
+      container.id = CONTAINER_ID;
+      container.setAttribute('aria-hidden', 'true');
+      container.style.position = 'fixed';
+      container.style.bottom = '0';
+      container.style.right = '0';
+      container.style.width = '200px';
+      container.style.height = '200px';
+      container.style.opacity = '0.001';
+      container.style.pointerEvents = 'none';
+      container.style.zIndex = '-1';
+      container.style.overflow = 'hidden';
+      document.body.appendChild(container);
+    }
+  }
+
+  private createPlayer() {
+    if (this.player || !window.YT || typeof window.YT.Player !== 'function') return;
+    this.ensureContainer();
+
+    try {
+      this.player = new window.YT.Player(CONTAINER_ID, {
+        width: 200,
+        height: 200,
+        videoId: YOUTUBE_VIDEO_ID,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          modestbranding: 1,
+          rel: 0,
+          playsinline: 1,
+          start: CHORUS_START_SECONDS,
+          end: CHORUS_END_SECONDS,
+          origin: window.location.origin,
+        },
+        events: {
+          onReady: () => {
+            this.isPlayerReady = true;
+            this.isInitializing = false;
+            if (this.pendingPlay && this.isAudioPlaying) {
+              this.pendingPlay = false;
+              this.startChorusPlayback();
+            }
+          },
+          onStateChange: (event) => {
+            const endedState = window.YT?.PlayerState?.ENDED ?? 0;
+            if (event.data === endedState && this.isAudioPlaying) {
+              this.player?.seekTo(CHORUS_START_SECONDS, true);
+              this.player?.playVideo();
+            }
+          },
+          onError: () => {
+            this.isAudioPlaying = false;
+            this.pendingPlay = false;
+            this.clearLoopTimer();
+            this.notify();
+          },
+        },
+      });
+    } catch (e) {
+      this.isInitializing = false;
+      console.warn('YouTube chorus player init error:', e);
+    }
+  }
+
+  private startChorusPlayback() {
+    if (!this.player || !this.isPlayerReady) return;
+    try {
+      this.player.unMute();
+      this.player.setVolume(85);
+      this.player.seekTo(CHORUS_START_SECONDS, true);
+      this.player.playVideo();
+      this.startLoopTimer();
+    } catch (e) {
+      console.warn('YouTube chorus playback error:', e);
+    }
+  }
+
+  private startLoopTimer() {
+    this.clearLoopTimer();
+    this.loopTimer = window.setInterval(() => {
+      if (!this.isAudioPlaying || !this.player || !this.isPlayerReady) return;
+      try {
+        const current = this.player.getCurrentTime();
+        if (current >= CHORUS_END_SECONDS || current < CHORUS_START_SECONDS - 1) {
+          this.player.seekTo(CHORUS_START_SECONDS, true);
+        }
+      } catch {
+        // Ignore transient player query errors
+      }
+    }, 250);
+  }
+
+  private clearLoopTimer() {
+    if (this.loopTimer !== null) {
+      window.clearInterval(this.loopTimer);
+      this.loopTimer = null;
     }
   }
 
@@ -32,91 +219,36 @@ class AmbientAudioManager {
   }
 
   public play() {
-    try {
-      this.initContext();
-      if (!this.ctx) return;
+    this.isAudioPlaying = true;
+    this.notify();
 
-      this.masterGain = this.ctx.createGain();
-      this.masterGain.gain.setValueAtTime(0, this.ctx.currentTime);
-      this.masterGain.gain.linearRampToValueAtTime(0.35, this.ctx.currentTime + 1.5);
-      this.masterGain.connect(this.ctx.destination);
-
-      // Pink noise for rain
-      const bufferSize = this.ctx.sampleRate * 2;
-      const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-      const output = noiseBuffer.getChannelData(0);
-      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-      for (let i = 0; i < bufferSize; i++) {
-        const white = Math.random() * 2 - 1;
-        b0 = 0.99886 * b0 + white * 0.0555179;
-        b1 = 0.99332 * b1 + white * 0.0750759;
-        b2 = 0.96900 * b2 + white * 0.1538520;
-        b3 = 0.86650 * b3 + white * 0.3104856;
-        b4 = 0.55000 * b4 + white * 0.5329522;
-        b5 = -0.7616 * b5 - white * 0.0168980;
-        output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
-        output[i] *= 0.08;
-        b6 = white * 0.115926;
-      }
-
-      const whiteNoise = this.ctx.createBufferSource();
-      whiteNoise.buffer = noiseBuffer;
-      whiteNoise.loop = true;
-
-      const filter = this.ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(800, this.ctx.currentTime);
-
-      whiteNoise.connect(filter);
-      filter.connect(this.masterGain);
-      whiteNoise.start();
-      this.noiseNode = whiteNoise;
-
-      // Warm blue-hour sine chord (A2 + E3)
-      const osc1 = this.ctx.createOscillator();
-      osc1.type = 'sine';
-      osc1.frequency.setValueAtTime(110, this.ctx.currentTime); // A2
-      const oscGain1 = this.ctx.createGain();
-      oscGain1.gain.setValueAtTime(0.08, this.ctx.currentTime);
-      osc1.connect(oscGain1);
-      oscGain1.connect(this.masterGain);
-      osc1.start();
-      this.droneOsc1 = osc1;
-
-      const osc2 = this.ctx.createOscillator();
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(164.81, this.ctx.currentTime); // E3
-      const oscGain2 = this.ctx.createGain();
-      oscGain2.gain.setValueAtTime(0.05, this.ctx.currentTime);
-      osc2.connect(oscGain2);
-      oscGain2.connect(this.masterGain);
-      osc2.start();
-      this.droneOsc2 = osc2;
-
-      this.isAudioPlaying = true;
-    } catch (e) {
-      console.warn("AudioContext playback error:", e);
+    if (!this.player) {
+      this.pendingPlay = true;
+      this.preload();
+      return;
     }
+
+    if (!this.isPlayerReady) {
+      this.pendingPlay = true;
+      return;
+    }
+
+    this.pendingPlay = false;
+    this.startChorusPlayback();
   }
 
   public stop() {
-    if (this.masterGain && this.ctx) {
+    this.isAudioPlaying = false;
+    this.pendingPlay = false;
+    this.clearLoopTimer();
+    this.notify();
+
+    if (this.player && this.isPlayerReady) {
       try {
-        this.masterGain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.6);
-        setTimeout(() => {
-          this.noiseNode?.disconnect();
-          this.droneOsc1?.stop();
-          this.droneOsc2?.stop();
-          this.noiseNode = null;
-          this.droneOsc1 = null;
-          this.droneOsc2 = null;
-          this.isAudioPlaying = false;
-        }, 600);
+        this.player.pauseVideo();
       } catch {
-        this.isAudioPlaying = false;
+        // Ignore pause error if player is tearing down
       }
-    } else {
-      this.isAudioPlaying = false;
     }
   }
 

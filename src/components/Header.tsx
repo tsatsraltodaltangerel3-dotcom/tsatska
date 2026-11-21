@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { href: '#hero', label: 'Эхлэл' },
   { href: '#works', label: 'Бүтээлүүд' },
   { href: '#profession', label: 'Мөрөөдөл' },
+  { href: '#football-info', label: 'Мэдээлэл' },
   { href: '#youtube', label: 'Видео' },
   { href: '#services', label: 'Services' },
   { href: '#community', label: 'Дэмжигчид' },
@@ -20,16 +21,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenAdmin }) =>
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#021327]/90 backdrop-blur-md border-b border-white/10">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#070102]/90 backdrop-blur-md border-b border-red-500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-8">
         {/* Zone 1: Brand Wordmark */}
         <a
           href="#hero"
-          className="flex items-center gap-2.5 text-white font-display text-xl sm:text-2xl font-bold uppercase tracking-wide whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38BDF8] rounded"
+          className="flex items-center gap-2.5 text-white font-display text-xl sm:text-2xl font-bold uppercase tracking-wide whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EF4444] rounded"
         >
           <span
             aria-hidden="true"
-            className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#0284C7] via-[#38BDF8] to-[#BAE6FD] shadow-[0_0_16px_rgba(56,189,248,0.45)] inline-block shrink-0"
+            className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#7F1D1D] via-[#DC2626] to-[#FCA5A5] shadow-[0_0_16px_rgba(220,38,38,0.55)] inline-block shrink-0"
           />
           <span>football</span>
         </a>
@@ -43,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenAdmin }) =>
             <a
               key={item.href}
               href={item.href}
-              className="relative py-1 hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#38BDF8] hover:after:w-full after:transition-all after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38BDF8] rounded"
+              className="relative py-1 hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#EF4444] hover:after:w-full after:transition-all after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EF4444] rounded"
             >
               {item.label}
             </a>
@@ -51,14 +52,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenAdmin }) =>
           <button
             type="button"
             onClick={onOpenContact}
-            className="relative py-1 hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#38BDF8] hover:after:w-full after:transition-all after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38BDF8] rounded"
+            className="relative py-1 hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#EF4444] hover:after:w-full after:transition-all after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EF4444] rounded"
           >
             Contact
           </button>
           <button
             type="button"
             onClick={onOpenAdmin}
-            className="relative py-1 text-[#38BDF8] hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#38BDF8] hover:after:w-full after:transition-all after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#38BDF8] rounded"
+            className="relative py-1 text-[#EF4444] hover:text-white transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#EF4444] hover:after:w-full after:transition-all after:duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EF4444] rounded"
           >
             Admin
           </button>
@@ -70,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenAdmin }) =>
             href={PERSONAL_INFO.netlifyBase}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden lg:inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#021327] bg-[#38BDF8] hover:bg-[#7DD3FC] rounded-full transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="hidden lg:inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-[#DC2626] hover:bg-[#EF4444] rounded-full transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             <span>Netlify сайт үзэх</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -90,7 +91,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenAdmin }) =>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#021327] border-b border-white/10 px-4 py-4 space-y-2">
+        <div className="lg:hidden bg-[#070102] border-b border-red-500/20 px-4 py-4 space-y-2">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
@@ -117,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenAdmin }) =>
               setMobileMenuOpen(false);
               onOpenAdmin();
             }}
-            className="block w-full text-left py-2.5 px-3 text-sm font-semibold text-[#38BDF8] hover:text-white hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
+            className="block w-full text-left py-2.5 px-3 text-sm font-semibold text-[#EF4444] hover:text-white hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
           >
             Admin
           </button>
@@ -126,7 +127,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenAdmin }) =>
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}
-            className="mt-2 flex items-center justify-center gap-2 w-full py-2.5 px-4 text-sm font-semibold text-[#021327] bg-[#38BDF8] rounded-full"
+            className="mt-2 flex items-center justify-center gap-2 w-full py-2.5 px-4 text-sm font-semibold text-white bg-[#DC2626] rounded-full"
           >
             <span>Netlify сайт үзэх</span>
             <ExternalLink className="w-4 h-4" />
